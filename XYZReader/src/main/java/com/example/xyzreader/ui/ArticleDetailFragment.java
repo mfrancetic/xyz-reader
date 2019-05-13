@@ -364,6 +364,4 @@ public class ArticleDetailFragment extends Fragment implements
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 }
