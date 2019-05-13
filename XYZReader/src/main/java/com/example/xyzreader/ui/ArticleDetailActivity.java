@@ -13,7 +13,10 @@ import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowInsets;
@@ -49,6 +52,12 @@ public class ArticleDetailActivity extends AppCompatActivity
                             View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
         }
         setContentView(R.layout.activity_article_detail);
+
+//        Toolbar toolbar = findViewById(R.id.toolbar_detail);
+//        setSupportActionBar(toolbar);
+//        if (getSupportActionBar()!= null) {
+//            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        }
 
         getLoaderManager().initLoader(0, null, this);
 
@@ -178,6 +187,25 @@ public class ArticleDetailActivity extends AppCompatActivity
         @Override
         public int getCount() {
             return (mCursor != null) ? mCursor.getCount() : 0;
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.home) {
+            onBackPressed();
+            return true;
+        } else if (id == R.id.refresh) {
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 }

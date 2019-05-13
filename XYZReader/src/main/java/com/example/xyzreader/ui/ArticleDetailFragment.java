@@ -129,16 +129,21 @@ public class ArticleDetailFragment extends Fragment implements
 //            }
 //        });
 
-        toolbar = mRootView.findViewById(R.id.toolbar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        AppCompatActivity appCompatActivity = ((AppCompatActivity) getActivity());
+
+        Toolbar toolbar = mRootView.findViewById(R.id.toolbar_detail);
+        appCompatActivity.setSupportActionBar(toolbar);
+        if (appCompatActivity.getSupportActionBar()!= null) {
+            appCompatActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            appCompatActivity.getSupportActionBar().setHomeButtonEnabled(true);
+            appCompatActivity.getSupportActionBar().setTitle("");
         }
+
+
 
 //        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-//        ((AppCompatActivity) getActivity()).setSupportActionBar(toolba);
 
         mScrollView = (ObservableScrollView) mRootView.findViewById(R.id.scrollview);
         mScrollView.setCallbacks(new ObservableScrollView.Callbacks() {
