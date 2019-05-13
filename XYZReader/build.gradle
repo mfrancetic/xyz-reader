@@ -33,4 +33,5 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.12.1'
     implementation "com.android.support:design:$androidSupportVersion"
     implementation files('libs/volley.jar')
+    implementation 'com.google.firebase:firebase-core:16.0.9'
 }

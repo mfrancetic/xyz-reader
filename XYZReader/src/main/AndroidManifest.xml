@@ -50,6 +50,10 @@
             android:authorities="com.example.xyzreader"
             android:exported="false" />
 
+        <service android:name="com.google.android.gms.measurement.AppMeasurementService"
+            android:enabled="true"
+            android:exported="false"/>
+
     </application>
 
 </manifest>
