@@ -8,6 +8,8 @@ import android.content.IntentFilter;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -44,6 +46,9 @@ public class ArticleListActivity extends AppCompatActivity implements
     private static final String TAG = ArticleListActivity.class.toString();
     private Toolbar mToolbar;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+
+    private CoordinatorLayout coordinatorLayout;
+
     private RecyclerView mRecyclerView;
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
@@ -59,6 +64,10 @@ public class ArticleListActivity extends AppCompatActivity implements
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
+        coordinatorLayout = findViewById(R.id.coordinator_layout);
+
+
+
 //        final View toolbarContainerView = findViewById(R.id.toolbar_container);
 //
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
@@ -73,6 +82,7 @@ public class ArticleListActivity extends AppCompatActivity implements
 
     private void refresh() {
         startService(new Intent(this, UpdaterService.class));
+
     }
 
     @Override
@@ -86,6 +96,7 @@ public class ArticleListActivity extends AppCompatActivity implements
     protected void onStop() {
         super.onStop();
         unregisterReceiver(mRefreshingReceiver);
+
     }
 
     private boolean mIsRefreshing = false;
@@ -119,6 +130,18 @@ public class ArticleListActivity extends AppCompatActivity implements
                 new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(sglm);
         mRecyclerView.setHasFixedSize(true);
+
+        Snackbar snackbarRefresh = Snackbar.make(coordinatorLayout, getString(R.string.snackbar_text_update), Snackbar.LENGTH_LONG);
+        snackbarRefresh.getView().setPadding(6, 0, 6, 6);
+        snackbarRefresh.show();
+//        snackbarRefresh.setAction(R.string.snackbar_undo, new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Snackbar snackbarUndo = Snackbar.make(coordinatorLayout, getString(R.string.snackbar_refresh_undone), Snackbar.LENGTH_LONG);
+//                snackbarUndo.show();
+//                onStop();
+//            }
+//        });
     }
 
     @Override
@@ -146,6 +169,7 @@ public class ArticleListActivity extends AppCompatActivity implements
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     startActivity(new Intent(Intent.ACTION_VIEW,
                             ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition()))));
                 }
