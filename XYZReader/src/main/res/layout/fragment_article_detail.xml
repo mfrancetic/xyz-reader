@@ -86,6 +86,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/actionBarSize"
                 android:layout_marginLeft="@dimen/list_toolbar_side_margin"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginTop="12dp"
                 android:layout_marginRight="@dimen/list_toolbar_side_margin"
                 app:layout_collapseMode="pin"
                 android:elevation="2dp"
@@ -123,7 +126,7 @@
                 android:paddingBottom="@dimen/detail_body_bottom_margin"
                 android:textColor="@color/colorTextPrimary"
                 android:textColorLink="@color/colorTextPrimary"
-                android:textSize="@dimen/detail_body_text_size"
+                android:textSize="16sp"
                 tools:text="article body" />
 
         </LinearLayout>

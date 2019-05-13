@@ -17,6 +17,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
@@ -26,6 +28,9 @@ import android.text.format.DateUtils;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -129,7 +134,7 @@ public class ArticleDetailFragment extends Fragment implements
 //            }
 //        });
 
-        AppCompatActivity appCompatActivity = ((AppCompatActivity) getActivity());
+        final AppCompatActivity appCompatActivity = ((AppCompatActivity) getActivity());
 
         Toolbar toolbar = mRootView.findViewById(R.id.toolbar_detail);
         appCompatActivity.setSupportActionBar(toolbar);
@@ -137,13 +142,33 @@ public class ArticleDetailFragment extends Fragment implements
             appCompatActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             appCompatActivity.getSupportActionBar().setHomeButtonEnabled(true);
             appCompatActivity.getSupportActionBar().setTitle("");
+
+//            toolbar.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    appCompatActivity.onBackPressed();
+//                }
+//            });
+
+            toolbar.isClickable();
+            toolbar.isFocusable();
+//
+//            toolbar.inflateMenu(R.menu.main);
+//            toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+//                @Override
+//                public boolean onMenuItemClick(MenuItem menuItem) {
+//                    int id = menuItem.getItemId();
+//                    if (id == R.id.home) {
+//                        appCompatActivity.onBackPressed();
+//                        return true;
+//                    }
+//                return ArticleDetailFragment.super.onOptionsItemSelected(menuItem);
+//            }});
+
         }
 
 
-
 //        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
 
         mScrollView = (ObservableScrollView) mRootView.findViewById(R.id.scrollview);
         mScrollView.setCallbacks(new ObservableScrollView.Callbacks() {
@@ -322,4 +347,23 @@ public class ArticleDetailFragment extends Fragment implements
                 ? (int) mPhotoContainerView.getTranslationY() + mPhotoView.getHeight() - mScrollY
                 : mPhotoView.getHeight() - mScrollY;
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.home) {
+            AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
+            appCompatActivity.onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }
