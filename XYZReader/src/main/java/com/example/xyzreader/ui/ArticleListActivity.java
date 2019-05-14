@@ -72,8 +72,6 @@ public class ArticleListActivity extends AppCompatActivity implements
 
         coordinatorLayout = findViewById(R.id.coordinator_layout);
 
-
-
 //        final View toolbarContainerView = findViewById(R.id.toolbar_container);
 //
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);

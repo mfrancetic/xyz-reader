@@ -34,4 +34,5 @@ dependencies {
     implementation "com.android.support:design:$androidSupportVersion"
     implementation files('libs/volley.jar')
     implementation 'com.google.firebase:firebase-core:16.0.9'
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }
