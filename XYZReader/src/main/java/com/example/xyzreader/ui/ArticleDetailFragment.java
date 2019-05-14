@@ -360,6 +360,7 @@ public class ArticleDetailFragment extends Fragment implements
         if (id == R.id.home) {
             AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
             appCompatActivity.onBackPressed();
+            appCompatActivity.supportFinishAfterTransition();
             return true;
         }
         return super.onOptionsItemSelected(item);

@@ -1,5 +1,6 @@
 package com.example.xyzreader.ui;
 
+import android.app.ActivityOptions;
 import android.app.LoaderManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -26,6 +27,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.xyzreader.R;
@@ -175,19 +177,35 @@ public class ArticleListActivity extends AppCompatActivity implements
                 @Override
                 public void onClick(View view) {
 
-                    Slide slide = new Slide();
-                    slide.setSlideEdge(Gravity.TOP);
+                    DynamicHeightNetworkImageView sharedView = view.findViewById(R.id.thumbnail);
 
-                    TransitionManager.beginDelayedTransition(parent, slide);
-                    view.setVisibility(View.INVISIBLE);
-
+//                    Slide slide = new Slide();
+//                    slide.setSlideEdge(Gravity.TOP);
 //
-//                    TransitionManager.go(Scene.getSceneForLayout(
-//                            (parent, R.layout.activity_article_list,
-//                            ArticleListActivity.this
-//                    )));
+//                    TransitionManager.beginDelayedTransition(parent, slide);
+//                    view.setVisibility(View.INVISIBLE);
+
+//                    TransitionManager.go(Scene.getSceneForLayout(parent,
+//                            R.layout.activity_article_list, ArticleListActivity.this));
+
+//                    Intent intent = new Intent(this, DetailsActivity.class);
+//// Pass data object in the bundle and populate details activity.
+//                    intent.putExtra(DetailsActivity.EXTRA_CONTACT, contact);
+//                    ActivityOptionsCompat options = ActivityOptionsCompat.
+//                            makeSceneTransitionAnimation(this, (View)ivProfile, "profile");
+//                    startActivity(intent, options.toBundle());
+//
+//                    Bundle bundle = ActivityOptions.makeSceneTransitionAnimation
+//                            (ArticleListActivity.this).toBundle();
+////
+                    Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(
+                            ArticleListActivity.this,
+                            sharedView,
+                            sharedView.getTransitionName()).toBundle();
+
                     startActivity(new Intent(Intent.ACTION_VIEW,
-                            ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition()))));
+                            ItemsContract.Items.buildItemUri(getItemId
+                                    (vh.getAdapterPosition()))), bundle);
                 }
             });
             return vh;

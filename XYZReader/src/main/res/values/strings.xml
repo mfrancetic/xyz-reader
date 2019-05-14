@@ -9,5 +9,6 @@
 
     <string name="snackbar_text_update">The article list has been updated</string>
     <string name="up">Up</string>
+    <string name="transition_photo">Transition photo</string>
 
 </resources>
