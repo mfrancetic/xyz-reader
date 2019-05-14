@@ -392,12 +392,13 @@ public class ArticleDetailFragment extends Fragment implements
         return super.onOptionsItemSelected(item);
     }
 
+
     private void scheduleStartPostponedTransition(final View sharedElement) {
-            sharedElement.getViewTreeObserver().addOnPreDrawListener(
+        sharedElement.getViewTreeObserver().addOnPreDrawListener(
                 new ViewTreeObserver.OnPreDrawListener() {
                     @Override
                     public boolean onPreDraw() {
-                            sharedElement.getViewTreeObserver().removeOnPreDrawListener(this);
+                        sharedElement.getViewTreeObserver().removeOnPreDrawListener(this);
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                             getActivity().startPostponedEnterTransition();
                         }

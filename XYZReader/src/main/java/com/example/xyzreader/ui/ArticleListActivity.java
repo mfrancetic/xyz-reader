@@ -11,6 +11,8 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -126,6 +128,9 @@ public class ArticleListActivity extends AppCompatActivity implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+
+        startPostponedEnterTransition();
+
         Adapter adapter = new Adapter(cursor);
         adapter.setHasStableIds(true);
         mRecyclerView.setAdapter(adapter);
@@ -195,11 +200,23 @@ public class ArticleListActivity extends AppCompatActivity implements
 //
 //                    Bundle bundle = ActivityOptions.makeSceneTransitionAnimation
 //                            (ArticleListActivity.this).toBundle();
+//
+//                    Intent intent = new Intent(Intent.ACTION_VIEW,
+//                            ItemsContract.Items.buildItemUri(getItemId
+//                                    (vh.getAdapterPosition())));
+//
+//                    intent.putExtra("photo", contact);
+//                    ActivityOptionsCompat options = ActivityOptionsCompat.
+//                            makeSceneTransitionAnimation(this, (View)photo, "profile");
+//                    startActivity(intent, options.toBundle());
 ////
+
+
+
                     Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(
                             ArticleListActivity.this,
                             sharedView,
-                            sharedView.getTransitionName()).toBundle();
+                            ViewCompat.getTransitionName(sharedView)).toBundle();
 
                     startActivity(new Intent(Intent.ACTION_VIEW,
                             ItemsContract.Items.buildItemUri(getItemId
@@ -263,5 +280,12 @@ public class ArticleListActivity extends AppCompatActivity implements
             titleView = (TextView) view.findViewById(R.id.article_title);
             subtitleView = (TextView) view.findViewById(R.id.article_subtitle);
         }
+    }
+
+    @Override
+    public void onActivityReenter(int resultCode, Intent data) {
+        super.onActivityReenter(resultCode, data);
+
+        postponeEnterTransition();
     }
 }
