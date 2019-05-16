@@ -2,6 +2,7 @@ package com.example.xyzreader.ui;
 
 import android.app.Fragment;
 import android.app.LoaderManager;
+import android.app.SharedElementCallback;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
@@ -15,19 +16,25 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Map;
 
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ShareCompat;
+import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.format.DateUtils;
 import android.text.method.LinkMovementMethod;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -73,6 +80,9 @@ public class ArticleDetailFragment extends Fragment implements
     private View mPhotoContainerView;
     private ImageView mPhotoView;
     private int mScrollY;
+
+    private int id;
+
     private boolean mIsCard = false;
     private int mStatusBarFullOpacityBottom;
 
@@ -141,10 +151,17 @@ public class ArticleDetailFragment extends Fragment implements
 //            }
 //        });
 
+        prepareSharedElementTransition();
+
+        if (savedInstanceState == null && Build.VERSION.SDK_INT >= 26) {
+            postponeEnterTransition();
+        }
+
         final AppCompatActivity appCompatActivity = ((AppCompatActivity) getActivity());
         mPhotoView = (ImageView) mRootView.findViewById(R.id.photo);
 
         Intent intent = getActivity().getIntent();
+        id = intent.getIntExtra("id", 0);
         String transitionName = intent.getStringExtra("transitionName");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -200,6 +217,8 @@ public class ArticleDetailFragment extends Fragment implements
 
         bindViews();
         updateStatusBar();
+
+
         return mRootView;
     }
 
@@ -254,8 +273,6 @@ public class ArticleDetailFragment extends Fragment implements
         TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
 
 
-
-
         bodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Rosario-Regular.ttf"));
 
         if (mCursor != null) {
@@ -290,6 +307,7 @@ public class ArticleDetailFragment extends Fragment implements
                 @Override
                 public void onSuccess() {
                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                       getParentFragment().startPostponedEnterTransition();
                        scheduleStartPostponedTransition(mPhotoView);
                    }
                 }
@@ -406,5 +424,30 @@ public class ArticleDetailFragment extends Fragment implements
                 });
     }
 
+    private void prepareSharedElementTransition() {
+        Transition transition = TransitionInflater.from(getActivity().getBaseContext()).inflateTransition(
+                R.transition.image_shared_element_transition
+        );
+        setSharedElementEnterTransition(transition);
+
+
+        setEnterSharedElementCallback(new SharedElementCallback() {
+            @Override
+            public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
+
+//                android.support.v4.app.Fragment currentFragment = getActivity().a
+
+//                Fragment currentFragment = (Fragment) getActivity().getAdapter()
+//                        .instantiateItem(viewPager, MainActivity.currentPosition);
+
+
+                View view = getView();
+                if (view == null) {
+                    return;
+                }
+                sharedElements.put(names.get(id), view.findViewById(R.id.thumbnail));
+            }
+        });
+    }
 
 }

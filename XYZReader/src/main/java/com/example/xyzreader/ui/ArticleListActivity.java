@@ -2,6 +2,7 @@ package com.example.xyzreader.ui;
 
 import android.app.ActivityOptions;
 import android.app.LoaderManager;
+import android.app.SharedElementCallback;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.transition.Transition;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -22,6 +24,7 @@ import android.text.Html;
 import android.text.format.DateUtils;
 import android.transition.Scene;
 import android.transition.Slide;
+import android.transition.TransitionInflater;
 import android.transition.TransitionManager;
 import android.util.Log;
 import android.util.TypedValue;
@@ -41,6 +44,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Map;
 
 /**
  * An activity representing a list of Articles. This activity has different presentations for
@@ -65,6 +70,8 @@ public class ArticleListActivity extends AppCompatActivity implements
 
     private DynamicHeightNetworkImageView sharedView;
 
+    private int id;
+
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
     // Use default locale format
     private SimpleDateFormat outputFormat = new SimpleDateFormat();
@@ -85,6 +92,9 @@ public class ArticleListActivity extends AppCompatActivity implements
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
 
         sharedView = findViewById(R.id.thumbnail);
+
+        prepareTransitions();
+        postponeEnterTransition();
 
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -226,7 +236,7 @@ public class ArticleListActivity extends AppCompatActivity implements
 
                     sharedView = vh.thumbnailView;
 
-                    int id = vh.getAdapterPosition();
+                    id = vh.getAdapterPosition();
 
                     transitionName = "photo" + id;
 
@@ -241,6 +251,7 @@ public class ArticleListActivity extends AppCompatActivity implements
 
                         Intent intent = new Intent(Intent.ACTION_VIEW, ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition())));
                         intent.putExtra("bundle", bundle);
+                        intent.putExtra("id", id);
                         intent.putExtra("transitionName", transitionName);
                         startActivity(intent, bundle);
 
@@ -323,5 +334,20 @@ public class ArticleListActivity extends AppCompatActivity implements
         super.onActivityReenter(resultCode, data);
 
         postponeEnterTransition();
+    }
+
+    private void prepareTransitions() {
+        getWindow().setExitTransition(TransitionInflater.from(this).inflateTransition(R.transition.grid_exit_transition));
+        setExitSharedElementCallback(new SharedElementCallback() {
+            @Override
+            public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
+                RecyclerView.ViewHolder viewHolder = mRecyclerView.findViewHolderForAdapterPosition(id);
+                if (viewHolder == null || viewHolder.itemView == null) {
+                    return;
+                }
+
+                sharedElements.put(names.get(0), viewHolder.itemView.findViewById(R.id.thumbnail));
+            }
+        });
     }
 }
