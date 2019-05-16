@@ -93,6 +93,8 @@ public class ArticleDetailFragment extends Fragment implements
 
     private String dateKey = "date";
 
+    private String title;
+
     private String date;
 
     private String author;
@@ -102,6 +104,10 @@ public class ArticleDetailFragment extends Fragment implements
     private String body;
 
     private String idKey = "id";
+
+    private String urlKey = "url";
+
+    private String url;
 
     private boolean mIsCard = false;
     private int mStatusBarFullOpacityBottom;
@@ -155,7 +161,9 @@ public class ArticleDetailFragment extends Fragment implements
         // the fragment's onCreate may cause the same LoaderManager to be dealt to multiple
         // fragments because their mIndex is -1 (haven't been added to the activity yet). Thus,
         // we do this in onActivityCreated.
-        getLoaderManager().initLoader(0, null, this);
+//        if (savedInstanceState == null) {
+            getLoaderManager().initLoader(0, null, this);
+//        }
     }
 
     @Override
@@ -178,12 +186,13 @@ public class ArticleDetailFragment extends Fragment implements
         }
 
         if (savedInstanceState != null) {
-            savedInstanceState.getString(authorKey);
-            savedInstanceState.getString(titleKey);
-            savedInstanceState.getString(dateKey);
-            savedInstanceState.getString(bodyKey);
-            savedInstanceState.getInt(idKey);
-            savedInstanceState.getString(transitionNameKey);
+            author = savedInstanceState.getString(authorKey);
+            title = savedInstanceState.getString(titleKey);
+            date = savedInstanceState.getString(dateKey);
+            body = savedInstanceState.getString(bodyKey);
+            id = savedInstanceState.getInt(idKey);
+            url = savedInstanceState.getString(urlKey);
+            transitionName = savedInstanceState.getString(transitionNameKey);
         } else {
             Intent intent = getActivity().getIntent();
             id = intent.getIntExtra("id", 0);
@@ -280,8 +289,10 @@ public class ArticleDetailFragment extends Fragment implements
     }
 
     private Date parsePublishedDate() {
+        if (date == null) {
+            date = mCursor.getString(ArticleLoader.Query.PUBLISHED_DATE);
+        }
         try {
-            String date = mCursor.getString(ArticleLoader.Query.PUBLISHED_DATE);
             return dateFormat.parse(date);
         } catch (ParseException ex) {
             Log.e(TAG, ex.getMessage());
@@ -303,11 +314,18 @@ public class ArticleDetailFragment extends Fragment implements
 
         bodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Rosario-Regular.ttf"));
 
+
         if (mCursor != null) {
             mRootView.setAlpha(0);
             mRootView.setVisibility(View.VISIBLE);
             mRootView.animate().alpha(1);
-            titleView.setText(mCursor.getString(ArticleLoader.Query.TITLE));
+            if (title == null) {
+                title = mCursor.getString(ArticleLoader.Query.TITLE);
+            }
+            titleView.setText(title);
+            if (author == null) {
+                author = mCursor.getString(ArticleLoader.Query.AUTHOR);
+            }
             Date publishedDate = parsePublishedDate();
             if (!publishedDate.before(START_OF_EPOCH.getTime())) {
                 bylineView.setText(Html.fromHtml(
@@ -316,20 +334,27 @@ public class ArticleDetailFragment extends Fragment implements
                                 System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
                                 DateUtils.FORMAT_ABBREV_ALL).toString()
                                 + " by <font color='#ffffff'>"
-                                + mCursor.getString(ArticleLoader.Query.AUTHOR)
+                                + author
                                 + "</font>"));
 
             } else {
                 // If date is before 1902, just show the string
                 bylineView.setText(Html.fromHtml(
                         outputFormat.format(publishedDate) + " by <font color='#ffffff'>"
-                        + mCursor.getString(ArticleLoader.Query.AUTHOR)
+                        + author
                                 + "</font>"));
 
             }
-            bodyView.setText(Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY).replaceAll("(\r\n|\n)", "<br />")));
+            if (body == null) {
+                body = String.valueOf(Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY)));
+            }
+            bodyView.setText(body.replaceAll("(\r\n|\n)", "<br />"));
 
-            String url = mCursor.getString(ArticleLoader.Query.PHOTO_URL);
+//            bodyView.setText(Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY).replaceAll("(\r\n|\n)", "<br />")));
+
+            if (url == null) {
+                url = mCursor.getString(ArticleLoader.Query.PHOTO_URL);
+            }
 
             Picasso.get().load(url).into(mPhotoView, new Callback() {
                 @Override
@@ -481,10 +506,11 @@ public class ArticleDetailFragment extends Fragment implements
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putString(authorKey, author);
-        savedInstanceState.putString(titleKey, titleKey);
+        savedInstanceState.putString(titleKey, title);
         savedInstanceState.putString(bodyKey, body);
         savedInstanceState.putString(dateKey, date);
         savedInstanceState.putInt(idKey, id);
+        savedInstanceState.putString(urlKey, url);
         savedInstanceState.putString(transitionNameKey, transitionName);
         super.onSaveInstanceState(savedInstanceState);
     }

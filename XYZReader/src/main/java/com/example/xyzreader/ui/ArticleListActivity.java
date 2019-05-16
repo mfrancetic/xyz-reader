@@ -269,7 +269,6 @@ public class ArticleListActivity extends AppCompatActivity implements
 
                     sharedView.setTransitionName(transitionName);
 
-
                     Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(
                             ArticleListActivity.this,
                             sharedView, transitionName).toBundle();
@@ -278,8 +277,8 @@ public class ArticleListActivity extends AppCompatActivity implements
 
                         Intent intent = new Intent(Intent.ACTION_VIEW, ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition())));
                         intent.putExtra("bundle", bundle);
-                        intent.putExtra("id", id);
-                        intent.putExtra("transitionName", transitionName);
+                        intent.putExtra(idKey, id);
+                        intent.putExtra(transitionNameKey, transitionName);
                         startActivity(intent, bundle);
 
 
@@ -305,7 +304,10 @@ public class ArticleListActivity extends AppCompatActivity implements
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             mCursor.moveToPosition(position);
-            holder.titleView.setText(mCursor.getString(ArticleLoader.Query.TITLE));
+//            if (title == null) {
+                title = mCursor.getString(ArticleLoader.Query.TITLE);
+//            }
+            holder.titleView.setText(title);
             Date publishedDate = parsePublishedDate();
             if (!publishedDate.before(START_OF_EPOCH.getTime())) {
 
@@ -377,14 +379,14 @@ public class ArticleListActivity extends AppCompatActivity implements
             }
         });
     }
-
-    @Override
-    protected void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putString(authorKey, author);
-        savedInstanceState.putString(titleKey, titleKey);
-        savedInstanceState.putString(dateKey, date);
-        savedInstanceState.putString(transitionNameKey, transitionName);
-        savedInstanceState.putInt(idKey, id);
-        super.onSaveInstanceState(savedInstanceState);
-    }
+//
+//    @Override
+//    protected void onSaveInstanceState(Bundle savedInstanceState) {
+//        savedInstanceState.putString(authorKey, author);
+//        savedInstanceState.putString(titleKey, title);
+//        savedInstanceState.putString(dateKey, date);
+//        savedInstanceState.putString(transitionNameKey, transitionName);
+//        savedInstanceState.putInt(idKey, id);
+//        super.onSaveInstanceState(savedInstanceState);
+//    }
 }
