@@ -72,6 +72,26 @@ public class ArticleListActivity extends AppCompatActivity implements
 
     private int id;
 
+    private String transitionNameKey = "transitionName";
+
+    private String titleKey = "title";
+
+    private String title;
+
+    private String authorKey = "author";
+
+    private String dateKey = "date";
+
+    private String date;
+
+    private String author;
+
+    private String bodyKey = "body";
+
+    private String body;
+
+    private String idKey = "id";
+
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
     // Use default locale format
     private SimpleDateFormat outputFormat = new SimpleDateFormat();
@@ -96,12 +116,19 @@ public class ArticleListActivity extends AppCompatActivity implements
         prepareTransitions();
         postponeEnterTransition();
 
+        getLoaderManager().initLoader(0, null, this);
+
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        getLoaderManager().initLoader(0, null, this);
 
         if (savedInstanceState == null) {
             refresh();
+        } else {
+            savedInstanceState.getInt(idKey, id);
+            savedInstanceState.getString(transitionNameKey, transitionName);
+            savedInstanceState.getString(authorKey, author);
+            savedInstanceState.getString(titleKey, title);
+            savedInstanceState.getString(dateKey, date);
         }
     }
 
@@ -349,5 +376,15 @@ public class ArticleListActivity extends AppCompatActivity implements
                 sharedElements.put(names.get(0), viewHolder.itemView.findViewById(R.id.thumbnail));
             }
         });
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putString(authorKey, author);
+        savedInstanceState.putString(titleKey, titleKey);
+        savedInstanceState.putString(dateKey, date);
+        savedInstanceState.putString(transitionNameKey, transitionName);
+        savedInstanceState.putInt(idKey, id);
+        super.onSaveInstanceState(savedInstanceState);
     }
 }

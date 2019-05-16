@@ -83,6 +83,26 @@ public class ArticleDetailFragment extends Fragment implements
 
     private int id;
 
+    private String transitionName;
+
+    private String transitionNameKey = "transitionName";
+
+    private String titleKey = "title";
+
+    private String authorKey = "author";
+
+    private String dateKey = "date";
+
+    private String date;
+
+    private String author;
+
+    private String bodyKey = "body";
+
+    private String body;
+
+    private String idKey = "id";
+
     private boolean mIsCard = false;
     private int mStatusBarFullOpacityBottom;
 
@@ -157,17 +177,25 @@ public class ArticleDetailFragment extends Fragment implements
             postponeEnterTransition();
         }
 
+        if (savedInstanceState != null) {
+            savedInstanceState.getString(authorKey);
+            savedInstanceState.getString(titleKey);
+            savedInstanceState.getString(dateKey);
+            savedInstanceState.getString(bodyKey);
+            savedInstanceState.getInt(idKey);
+            savedInstanceState.getString(transitionNameKey);
+        } else {
+            Intent intent = getActivity().getIntent();
+            id = intent.getIntExtra("id", 0);
+            transitionName = intent.getStringExtra("transitionName");
+        }
+
         final AppCompatActivity appCompatActivity = ((AppCompatActivity) getActivity());
         mPhotoView = (ImageView) mRootView.findViewById(R.id.photo);
-
-        Intent intent = getActivity().getIntent();
-        id = intent.getIntExtra("id", 0);
-        String transitionName = intent.getStringExtra("transitionName");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mPhotoView.setTransitionName(transitionName);
         }
-
 
         Toolbar toolbar = mRootView.findViewById(R.id.toolbar_detail);
         appCompatActivity.setSupportActionBar(toolbar);
@@ -450,4 +478,14 @@ public class ArticleDetailFragment extends Fragment implements
         });
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putString(authorKey, author);
+        savedInstanceState.putString(titleKey, titleKey);
+        savedInstanceState.putString(bodyKey, body);
+        savedInstanceState.putString(dateKey, date);
+        savedInstanceState.putInt(idKey, id);
+        savedInstanceState.putString(transitionNameKey, transitionName);
+        super.onSaveInstanceState(savedInstanceState);
+    }
 }
