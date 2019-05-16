@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowInsets;
+import android.widget.ImageView;
 
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
@@ -39,6 +40,8 @@ public class ArticleDetailActivity extends AppCompatActivity
     private int mSelectedItemUpButtonFloor = Integer.MAX_VALUE;
     private int mTopInset;
 
+    private ImageView imageView;
+
     private ViewPager mPager;
     private MyPagerAdapter mPagerAdapter;
 //    private View mUpButtonContainer;
@@ -54,7 +57,12 @@ public class ArticleDetailActivity extends AppCompatActivity
         }
         setContentView(R.layout.activity_article_detail);
 
+//        imageView = findViewById(R.id.photo);
+
         postponeEnterTransition();
+
+
+//        getIntent().getBundleExtra(""));
 
 //        Toolbar toolbar = findViewById(R.id.toolbar_detail);
 //        setSupportActionBar(toolbar);
@@ -194,27 +202,27 @@ public class ArticleDetailActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.home) {
-            onBackPressed();
-            return true;
-        } else if (id == R.id.refresh) {
-            return true;
-        } else {
-            return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.main, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//        if (id == R.id.home) {
+//            onBackPressed();
+//            return true;
+//        } else if (id == R.id.refresh) {
+//            return true;
+//        } else {
+//            return super.onOptionsItemSelected(item);
+//        }
+//    }
+//
+//    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//    }
 }

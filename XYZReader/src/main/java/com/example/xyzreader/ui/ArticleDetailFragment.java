@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ShareCompat;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
@@ -109,6 +110,7 @@ public class ArticleDetailFragment extends Fragment implements
                 R.dimen.detail_card_top_margin);
         setHasOptionsMenu(true);
 
+
     }
 
     public ArticleDetailActivity getActivityCast() {
@@ -140,38 +142,34 @@ public class ArticleDetailFragment extends Fragment implements
 //        });
 
         final AppCompatActivity appCompatActivity = ((AppCompatActivity) getActivity());
+        mPhotoView = (ImageView) mRootView.findViewById(R.id.photo);
+
+        Intent intent = getActivity().getIntent();
+        String transitionName = intent.getStringExtra("transitionName");
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mPhotoView.setTransitionName(transitionName);
+        }
+
 
         Toolbar toolbar = mRootView.findViewById(R.id.toolbar_detail);
         appCompatActivity.setSupportActionBar(toolbar);
-        if (appCompatActivity.getSupportActionBar()!= null) {
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                appCompatActivity.onBackPressed();
+            }
+        });
+
+        if (appCompatActivity.getSupportActionBar() != null) {
             appCompatActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             appCompatActivity.getSupportActionBar().setHomeButtonEnabled(true);
             appCompatActivity.getSupportActionBar().setTitle("");
-
-//            toolbar.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    appCompatActivity.onBackPressed();
-//                }
-//            });
-
-            toolbar.isClickable();
-            toolbar.isFocusable();
-//
-//            toolbar.inflateMenu(R.menu.main);
-//            toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-//                @Override
-//                public boolean onMenuItemClick(MenuItem menuItem) {
-//                    int id = menuItem.getItemId();
-//                    if (id == R.id.home) {
-//                        appCompatActivity.onBackPressed();
-//                        return true;
-//                    }
-//                return ArticleDetailFragment.super.onOptionsItemSelected(menuItem);
-//            }});
-
+//            toolbar.setNavigationIcon(appCompatActivity.getDrawerToggleDelegate().getThemeUpIndicator());
         }
-
+        toolbar.inflateMenu(R.menu.main);
 
 //        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -186,7 +184,6 @@ public class ArticleDetailFragment extends Fragment implements
             }
         });
 
-        mPhotoView = (ImageView) mRootView.findViewById(R.id.photo);
         mPhotoContainerView = mRootView.findViewById(R.id.photo_container);
 
         mStatusBarColorDrawable = new ColorDrawable(0);
@@ -255,6 +252,8 @@ public class ArticleDetailFragment extends Fragment implements
         TextView bylineView = (TextView) mRootView.findViewById(R.id.article_byline);
         bylineView.setMovementMethod(new LinkMovementMethod());
         TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
+
+
 
 
         bodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Rosario-Regular.ttf"));

@@ -59,6 +59,12 @@ public class ArticleListActivity extends AppCompatActivity implements
 
     private RecyclerView mRecyclerView;
 
+    private String photo = "photo";
+
+    private String transitionName;
+
+    private DynamicHeightNetworkImageView sharedView;
+
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
     // Use default locale format
     private SimpleDateFormat outputFormat = new SimpleDateFormat();
@@ -77,6 +83,9 @@ public class ArticleListActivity extends AppCompatActivity implements
 //        final View toolbarContainerView = findViewById(R.id.toolbar_container);
 //
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+
+        sharedView = findViewById(R.id.thumbnail);
+
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         getLoaderManager().initLoader(0, null, this);
@@ -180,7 +189,6 @@ public class ArticleListActivity extends AppCompatActivity implements
                 @Override
                 public void onClick(View view) {
 
-                    DynamicHeightNetworkImageView sharedView = view.findViewById(R.id.thumbnail);
 
 //                    Slide slide = new Slide();
 //                    slide.setSlideEdge(Gravity.TOP);
@@ -210,17 +218,36 @@ public class ArticleListActivity extends AppCompatActivity implements
 //                            makeSceneTransitionAnimation(this, (View)photo, "profile");
 //                    startActivity(intent, options.toBundle());
 ////
+//                int id = vh.getAdapterPosition();
+//
+//                String transitionName = photo + id;
+//
+//                sharedView.setTransitionName(transitionName);
 
+                    sharedView = vh.thumbnailView;
+
+                    int id = vh.getAdapterPosition();
+
+                    transitionName = "photo" + id;
+
+                    sharedView.setTransitionName(transitionName);
 
 
                     Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(
                             ArticleListActivity.this,
-                            sharedView,
-                            ViewCompat.getTransitionName(sharedView)).toBundle();
+                            sharedView, transitionName).toBundle();
+//                            ViewCompat.getTransitionName(sharedView)).toBundle();
+//                            ViewCompat.getTransitionName(sharedView)).toBundle();
 
-                    startActivity(new Intent(Intent.ACTION_VIEW,
-                            ItemsContract.Items.buildItemUri(getItemId
-                                    (vh.getAdapterPosition()))), bundle);
+                        Intent intent = new Intent(Intent.ACTION_VIEW, ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition())));
+                        intent.putExtra("bundle", bundle);
+                        intent.putExtra("transitionName", transitionName);
+                        startActivity(intent, bundle);
+
+
+//                        startActivity(new Intent(Intent.ACTION_VIEW,
+//                            ItemsContract.Items.buildItemUri(getItemId
+//                                    (vh.getAdapterPosition()))), bundle);
                 }
             });
             return vh;
@@ -261,6 +288,15 @@ public class ArticleListActivity extends AppCompatActivity implements
                     mCursor.getString(ArticleLoader.Query.THUMB_URL),
                     ImageLoaderHelper.getInstance(ArticleListActivity.this).getImageLoader());
             holder.thumbnailView.setAspectRatio(mCursor.getFloat(ArticleLoader.Query.ASPECT_RATIO));
+
+
+//            holder.thumbnailView = sharedView;
+
+//            sharedView = holder.thumbnailView;
+
+//            sharedView.setTransitionName(transitionName);
+
+
         }
 
         @Override
