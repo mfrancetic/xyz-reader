@@ -10,6 +10,7 @@ import android.content.IntentFilter;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.transition.Transition;
@@ -82,6 +83,10 @@ public class ArticleListActivity extends AppCompatActivity implements
 
     private String dateKey = "date";
 
+    private String urlKey = "url";
+
+    private String url;
+
     private String date;
 
     private String author;
@@ -91,6 +96,12 @@ public class ArticleListActivity extends AppCompatActivity implements
     private String body;
 
     private String idKey = "id";
+
+    private static Parcelable bundleRecyclerViewState;
+
+    private static final String bundleRecyclerViewStateKey = "bundleRecyclerViewState";
+
+    private RecyclerView.LayoutManager layoutManager;
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
     // Use default locale format
@@ -123,13 +134,18 @@ public class ArticleListActivity extends AppCompatActivity implements
 
         if (savedInstanceState == null) {
             refresh();
-        } else {
-            savedInstanceState.getInt(idKey, id);
-            savedInstanceState.getString(transitionNameKey, transitionName);
-            savedInstanceState.getString(authorKey, author);
-            savedInstanceState.getString(titleKey, title);
-            savedInstanceState.getString(dateKey, date);
         }
+//        else {
+//            bundleRecyclerViewState = savedInstanceState.getParcelable(bundleRecyclerViewStateKey);
+//        }
+//        else {
+//            id = savedInstanceState.getInt(idKey, id);
+//            transitionName = savedInstanceState.getString(transitionNameKey, transitionName);
+//            author = savedInstanceState.getString(authorKey, author);
+//            title = savedInstanceState.getString(titleKey, title);
+//            date = savedInstanceState.getString(dateKey, date);
+//            url = savedInstanceState.getString(urlKey, url);
+//        }
     }
 
     private void refresh() {
@@ -291,8 +307,10 @@ public class ArticleListActivity extends AppCompatActivity implements
         }
 
         private Date parsePublishedDate() {
+//            if (date == null) {
+                 date = mCursor.getString(ArticleLoader.Query.PUBLISHED_DATE);
+//            }
             try {
-                String date = mCursor.getString(ArticleLoader.Query.PUBLISHED_DATE);
                 return dateFormat.parse(date);
             } catch (ParseException ex) {
                 Log.e(TAG, ex.getMessage());
@@ -303,12 +321,18 @@ public class ArticleListActivity extends AppCompatActivity implements
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
+
             mCursor.moveToPosition(position);
 //            if (title == null) {
                 title = mCursor.getString(ArticleLoader.Query.TITLE);
 //            }
             holder.titleView.setText(title);
             Date publishedDate = parsePublishedDate();
+
+//            if (author == null) {
+                author = mCursor.getString(ArticleLoader.Query.AUTHOR);
+//            }
+
             if (!publishedDate.before(START_OF_EPOCH.getTime())) {
 
                 holder.subtitleView.setText(Html.fromHtml(
@@ -317,15 +341,20 @@ public class ArticleListActivity extends AppCompatActivity implements
                                 System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
                                 DateUtils.FORMAT_ABBREV_ALL).toString()
                                 + "<br/>" + " by "
-                                + mCursor.getString(ArticleLoader.Query.AUTHOR)));
+                                + author));
             } else {
                 holder.subtitleView.setText(Html.fromHtml(
                         outputFormat.format(publishedDate)
                         + "<br/>" + " by "
-                        + mCursor.getString(ArticleLoader.Query.AUTHOR)));
+                        + author));
             }
+
+//            if (url == null) {
+                url =  mCursor.getString(ArticleLoader.Query.THUMB_URL);
+//            }
+
             holder.thumbnailView.setImageUrl(
-                    mCursor.getString(ArticleLoader.Query.THUMB_URL),
+                   url,
                     ImageLoaderHelper.getInstance(ArticleListActivity.this).getImageLoader());
             holder.thumbnailView.setAspectRatio(mCursor.getFloat(ArticleLoader.Query.ASPECT_RATIO));
 
@@ -379,14 +408,26 @@ public class ArticleListActivity extends AppCompatActivity implements
             }
         });
     }
-//
-//    @Override
-//    protected void onSaveInstanceState(Bundle savedInstanceState) {
-//        savedInstanceState.putString(authorKey, author);
-//        savedInstanceState.putString(titleKey, title);
-//        savedInstanceState.putString(dateKey, date);
-//        savedInstanceState.putString(transitionNameKey, transitionName);
-//        savedInstanceState.putInt(idKey, id);
-//        super.onSaveInstanceState(savedInstanceState);
-//    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putString(authorKey, author);
+        savedInstanceState.putString(titleKey, title);
+        savedInstanceState.putString(dateKey, date);
+        savedInstanceState.putString(transitionNameKey, transitionName);
+        savedInstanceState.putInt(idKey, id);
+        savedInstanceState.putString(urlKey, url);
+
+//        bundleRecyclerViewState = layoutManager.onSaveInstanceState();
+        savedInstanceState.putParcelable(bundleRecyclerViewStateKey, bundleRecyclerViewState);
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        if (bundleRecyclerViewState != null) {
+//            layoutManager.onRestoreInstanceState(bundleRecyclerViewState);
+//        }
+    }
 }

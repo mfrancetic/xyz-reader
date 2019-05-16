@@ -70,10 +70,14 @@ public class ArticleDetailActivity extends AppCompatActivity
 //            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        }
 
+        Intent intent = getIntent();
+        String transitionName = intent.getStringExtra("transitionName");
+
         getLoaderManager().initLoader(0, null, this);
 
         mPagerAdapter = new MyPagerAdapter(getFragmentManager());
         mPager = (ViewPager) findViewById(R.id.pager);
+        mPager.setTransitionName(transitionName);
         mPager.setAdapter(mPagerAdapter);
         mPager.setPageMargin((int) TypedValue
                 .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getResources().getDisplayMetrics()));
@@ -221,8 +225,8 @@ public class ArticleDetailActivity extends AppCompatActivity
 //        }
 //    }
 //
-//    @Override
-//    public void onBackPressed() {
-//        super.onBackPressed();
-//    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

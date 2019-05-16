@@ -25,6 +25,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
@@ -70,6 +71,8 @@ public class ArticleDetailFragment extends Fragment implements
     private View mRootView;
     private int mMutedColor = 0xFF333333;
     private ObservableScrollView mScrollView;
+
+    private ViewPager viewPager;
 //    private DrawInsetsFrameLayout mDrawInsetsFrameLayout;
 
     private Toolbar toolbar;
@@ -178,6 +181,8 @@ public class ArticleDetailFragment extends Fragment implements
 //                mTopInset = insets.top;
 //            }
 //        });
+
+        viewPager = (ViewPager) mRootView.findViewById(R.id.pager);
 
         prepareSharedElementTransition();
 
@@ -483,22 +488,23 @@ public class ArticleDetailFragment extends Fragment implements
         );
         setSharedElementEnterTransition(transition);
 
-
         setEnterSharedElementCallback(new SharedElementCallback() {
             @Override
             public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
 
 //                android.support.v4.app.Fragment currentFragment = getActivity().a
 
-//                Fragment currentFragment = (Fragment) getActivity().getAdapter()
-//                        .instantiateItem(viewPager, MainActivity.currentPosition);
+//                ViewPager viewPager = getview.getviewp
+//
+                ArticleDetailFragment currentFragment = (ArticleDetailFragment) viewPager.getAdapter()
+                        .instantiateItem(viewPager, id);
 
 
-                View view = getView();
+                View view = currentFragment.getView();
                 if (view == null) {
                     return;
                 }
-                sharedElements.put(names.get(id), view.findViewById(R.id.thumbnail));
+                sharedElements.put(names.get(0), view.findViewById(R.id.photo));
             }
         });
     }
@@ -514,4 +520,6 @@ public class ArticleDetailFragment extends Fragment implements
         savedInstanceState.putString(transitionNameKey, transitionName);
         super.onSaveInstanceState(savedInstanceState);
     }
+
+
 }
