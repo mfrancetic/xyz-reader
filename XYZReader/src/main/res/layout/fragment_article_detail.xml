@@ -25,7 +25,7 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar_layout_detail"
         android:layout_width="match_parent"
-        android:layout_height="204dp"
+        android:layout_height="@dimen/app_bar_layout_height"
         android:paddingTop="?android:attr/actionBarSize"
         android:background="@color/colorPrimary">
 
@@ -107,7 +107,7 @@
         android:clipToPadding="false"
         android:nestedScrollingEnabled="true"
         android:paddingLeft="@dimen/list_side_margin"
-        android:paddingTop="116dp"
+        android:paddingTop="@dimen/scroll_view_padding_top"
         android:paddingRight="@dimen/list_side_margin"
         android:paddingBottom="28dp"
         android:scrollbarStyle="outsideInset">

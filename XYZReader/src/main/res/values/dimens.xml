@@ -3,9 +3,12 @@
     <dimen name="detail_title_text_size">32sp</dimen>
     <dimen name="detail_body_text_size">22sp</dimen>
     <item name="detail_body_line_spacing_multiplier" format="float" type="fraction">1.25</item>
-
+    <dimen name="app_bar_layout_height">204dp</dimen>
     <dimen name="fab_elevation">6dp</dimen>
     <dimen name="fab_press_translation_z">12dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-
+    <dimen name="thumbnail_dimension">100dp</dimen>
+    <dimen name="scroll_view_padding_top">112dp</dimen>
+    <dimen name="title_text_size">16sp</dimen>
+    <dimen name="subtitle_text_size">14sp</dimen>
 </resources>

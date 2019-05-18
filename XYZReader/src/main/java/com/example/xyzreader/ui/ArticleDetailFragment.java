@@ -496,8 +496,10 @@ public class ArticleDetailFragment extends Fragment implements
 
 //                ViewPager viewPager = getview.getviewp
 //
-                ArticleDetailFragment currentFragment = (ArticleDetailFragment) viewPager.getAdapter()
-                        .instantiateItem(viewPager, id);
+//                if (viewPager.getAdapter() != null) {
+                    ArticleDetailFragment currentFragment = (ArticleDetailFragment) viewPager.getAdapter()
+                            .instantiateItem(viewPager, id);
+//                }
 
 
                 View view = currentFragment.getView();
