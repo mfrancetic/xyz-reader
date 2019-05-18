@@ -138,20 +138,14 @@ public class ArticleListActivity extends AppCompatActivity implements
 //        else {
 //            bundleRecyclerViewState = savedInstanceState.getParcelable(bundleRecyclerViewStateKey);
 //        }
-//        else {
-//            id = savedInstanceState.getInt(idKey, id);
-//            transitionName = savedInstanceState.getString(transitionNameKey, transitionName);
-//            author = savedInstanceState.getString(authorKey, author);
-//            title = savedInstanceState.getString(titleKey, title);
-//            date = savedInstanceState.getString(dateKey, date);
-//            url = savedInstanceState.getString(urlKey, url);
-//        }
     }
 
     private void refresh() {
         startService(new Intent(this, UpdaterService.class));
 
     }
+
+
 
     @Override
     protected void onStart() {
@@ -411,15 +405,11 @@ public class ArticleListActivity extends AppCompatActivity implements
 
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putString(authorKey, author);
-        savedInstanceState.putString(titleKey, title);
-        savedInstanceState.putString(dateKey, date);
         savedInstanceState.putString(transitionNameKey, transitionName);
         savedInstanceState.putInt(idKey, id);
         savedInstanceState.putString(urlKey, url);
-
 //        bundleRecyclerViewState = layoutManager.onSaveInstanceState();
-        savedInstanceState.putParcelable(bundleRecyclerViewStateKey, bundleRecyclerViewState);
+//        savedInstanceState.putParcelable(bundleRecyclerViewStateKey, bundleRecyclerViewState);
         super.onSaveInstanceState(savedInstanceState);
     }
 
@@ -430,4 +420,6 @@ public class ArticleListActivity extends AppCompatActivity implements
 //            layoutManager.onRestoreInstanceState(bundleRecyclerViewState);
 //        }
     }
+
+
 }

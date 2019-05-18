@@ -130,6 +130,7 @@ public class ArticleDetailFragment extends Fragment implements
 
     public static ArticleDetailFragment newInstance(long itemId) {
         Bundle arguments = new Bundle();
+
         arguments.putLong(ARG_ITEM_ID, itemId);
         ArticleDetailFragment fragment = new ArticleDetailFragment();
         fragment.setArguments(arguments);
@@ -142,6 +143,8 @@ public class ArticleDetailFragment extends Fragment implements
 
         if (getArguments().containsKey(ARG_ITEM_ID)) {
             mItemId = getArguments().getLong(ARG_ITEM_ID);
+        } else if (savedInstanceState != null){
+            mItemId = savedInstanceState.getLong(ARG_ITEM_ID);
         }
 
         mIsCard = getResources().getBoolean(R.bool.detail_is_card);
@@ -520,8 +523,10 @@ public class ArticleDetailFragment extends Fragment implements
         savedInstanceState.putInt(idKey, id);
         savedInstanceState.putString(urlKey, url);
         savedInstanceState.putString(transitionNameKey, transitionName);
+        savedInstanceState.putLong(ARG_ITEM_ID, mItemId);
         super.onSaveInstanceState(savedInstanceState);
     }
+
 
 
 }

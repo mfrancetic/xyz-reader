@@ -200,6 +200,8 @@ public class ArticleDetailActivity extends AppCompatActivity
             return ArticleDetailFragment.newInstance(mCursor.getLong(ArticleLoader.Query._ID));
         }
 
+
+
         @Override
         public int getCount() {
             return (mCursor != null) ? mCursor.getCount() : 0;
@@ -229,4 +231,6 @@ public class ArticleDetailActivity extends AppCompatActivity
     public void onBackPressed() {
         super.onBackPressed();
     }
+
+
 }
