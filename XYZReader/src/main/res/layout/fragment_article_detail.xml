@@ -13,10 +13,10 @@
         android:id="@+id/toolbar_detail"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="@dimen/detail_toolbar_margin_top"
         app:layout_collapseMode="pin"
         android:background="@color/colorPrimaryDark"
-        android:elevation="2dp"
+        android:elevation="@dimen/detail_toolbar_elevation"
         app:popupTheme="@style/AppTheme"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:contentScrim="@color/colorPrimary"
-            app:expandedTitleMarginStart="72dp"
+            app:expandedTitleMarginStart="@dimen/detail_collapsing_toolbar_layout_margin_start"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <FrameLayout
@@ -107,7 +107,7 @@
         android:paddingLeft="@dimen/list_side_margin"
         android:paddingTop="@dimen/scroll_view_padding_top"
         android:paddingRight="@dimen/list_side_margin"
-        android:paddingBottom="28dp"
+        android:paddingBottom="@dimen/scroll_view_padding_bottom"
         android:scrollbarStyle="outsideInset">
 
         <LinearLayout
@@ -120,13 +120,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/detail_inner_horiz_margin"
-                android:layout_marginTop="140dp"
+                android:layout_marginTop="@dimen/detail_body_top_margin"
                 android:layout_marginRight="@dimen/detail_inner_horiz_margin"
                 android:lineSpacingMultiplier="@fraction/detail_body_line_spacing_multiplier"
                 android:paddingBottom="@dimen/detail_body_bottom_margin"
                 android:textColor="@color/colorTextPrimary"
                 android:textColorLink="@color/colorTextPrimary"
-                android:textSize="16sp"
+                android:textSize="@dimen/detail_body_text_size"
                 tools:text="article body" />
 
         </LinearLayout>

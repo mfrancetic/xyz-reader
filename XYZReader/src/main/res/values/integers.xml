@@ -3,6 +3,7 @@
     <!-- list -->
 
     <integer name="list_column_count">2</integer>
-
+    <integer name="detail_title_max_lines">4</integer>
+    <integer name="detail_subtitle_max_lines">2</integer>
 
 </resources>
