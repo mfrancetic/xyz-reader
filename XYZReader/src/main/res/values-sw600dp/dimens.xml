@@ -11,4 +11,13 @@
     <dimen name="title_text_size">20sp</dimen>
     <dimen name="subtitle_text_size">16sp</dimen>
     <dimen name="article_byline_text_size">?android:attr/textAppearanceMedium</dimen>
+
+    <!-- detail -->
+    <dimen name="detail_photo_height">384dp</dimen>
+    <dimen name="detail_card_top_margin">384dp</dimen>
+    <dimen name="detail_inner_horiz_margin">76dp</dimen>
+    <dimen name="list_side_margin">12dp</dimen>
+    <dimen name="detail_metabar_vert_padding">32dp</dimen>
+    <dimen name="detail_metabar_title_bottom_padding">8dp</dimen>
+    <dimen name="detail_body_bottom_margin">96dp</dimen>
 </resources>
