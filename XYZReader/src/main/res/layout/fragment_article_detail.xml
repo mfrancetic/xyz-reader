@@ -77,7 +77,7 @@
                         android:fontFamily="sans-serif"
                         android:lineSpacingMultiplier="0.9"
                         android:paddingBottom="@dimen/detail_metabar_title_bottom_padding"
-                        android:textColor="#fff"
+                        android:textColor="@color/colorTextTitle"
                         android:textSize="@dimen/detail_title_text_size"
                         android:textStyle="bold"
                         tools:text="title" />
@@ -87,7 +87,7 @@
                         style="?android:attr/textAppearanceSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="#8fff"
+                        android:textColor="@color/colorTextByline"
                         tools:text="date, author" />
                 </LinearLayout>
 

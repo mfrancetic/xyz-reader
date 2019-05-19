@@ -97,6 +97,8 @@ public class ArticleListActivity extends AppCompatActivity implements
 
     private String idKey = "id";
 
+    private static final String bundleKey = "bundle";
+
     private static Parcelable bundleRecyclerViewState;
 
     private static final String bundleRecyclerViewStateKey = "bundleRecyclerViewState";
@@ -289,7 +291,7 @@ public class ArticleListActivity extends AppCompatActivity implements
 //                            ViewCompat.getTransitionName(sharedView)).toBundle();
 
                         Intent intent = new Intent(Intent.ACTION_VIEW, ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition())));
-                        intent.putExtra("bundle", bundle);
+                        intent.putExtra(bundleKey, bundle);
                         intent.putExtra(idKey, id);
                         intent.putExtra(transitionNameKey, transitionName);
                         startActivity(intent, bundle);

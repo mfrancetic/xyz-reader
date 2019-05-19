@@ -26,4 +26,6 @@
     <color name="colorTextSecondary">#757575</color>
     <color name="colorDivider">#BDBDBD</color>
     <color name="ltgray">#ffe0e0e0</color>
+    <color name="colorTextTitle">#fff</color>
+    <color name="colorTextByline">#8fff</color>
 </resources>
