@@ -271,6 +271,9 @@ public class ArticleListActivity extends AppCompatActivity implements
 //
 //                sharedView.setTransitionName(transitionName);
 
+
+
+
                     sharedView = vh.thumbnailView;
 
                     id = vh.getAdapterPosition();

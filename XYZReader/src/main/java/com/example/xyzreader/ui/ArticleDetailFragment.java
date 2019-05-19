@@ -6,9 +6,7 @@ import android.app.SharedElementCallback;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 
@@ -21,15 +19,9 @@ import java.util.Map;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.ShareCompat;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.graphics.Palette;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.format.DateUtils;
@@ -47,8 +39,6 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
 import com.squareup.picasso.Callback;
@@ -84,7 +74,7 @@ public class ArticleDetailFragment extends Fragment implements
     private ImageView mPhotoView;
     private int mScrollY;
 
-    private int id;
+    private int position;
 
     private String transitionName;
 
@@ -106,7 +96,7 @@ public class ArticleDetailFragment extends Fragment implements
 
     private String body;
 
-    private String idKey = "id";
+    private static final String positionKey = "position";
 
     private String urlKey = "url";
 
@@ -128,10 +118,11 @@ public class ArticleDetailFragment extends Fragment implements
     public ArticleDetailFragment() {
     }
 
-    public static ArticleDetailFragment newInstance(long itemId) {
+    public static ArticleDetailFragment newInstance(long itemId, int position) {
         Bundle arguments = new Bundle();
 
         arguments.putLong(ARG_ITEM_ID, itemId);
+        arguments.putInt(positionKey, position);
         ArticleDetailFragment fragment = new ArticleDetailFragment();
         fragment.setArguments(arguments);
         return fragment;
@@ -145,6 +136,10 @@ public class ArticleDetailFragment extends Fragment implements
             mItemId = getArguments().getLong(ARG_ITEM_ID);
         } else if (savedInstanceState != null){
             mItemId = savedInstanceState.getLong(ARG_ITEM_ID);
+        }
+
+        if (getArguments().containsKey(positionKey)) {
+            position = getArguments().getInt(positionKey);
         }
 
         mIsCard = getResources().getBoolean(R.bool.detail_is_card);
@@ -177,7 +172,7 @@ public class ArticleDetailFragment extends Fragment implements
             Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
 //        mDrawInsetsFrameLayout = (DrawInsetsFrameLayout)
-//                mRootView.findViewById(R.id.draw_insets_frame_layout);
+//                mRootView.findViewById(R.position.draw_insets_frame_layout);
 //        mDrawInsetsFrameLayout.setOnInsetsCallback(new DrawInsetsFrameLayout.OnInsetsCallback() {
 //            @Override
 //            public void onInsetsChanged(Rect insets) {
@@ -198,13 +193,14 @@ public class ArticleDetailFragment extends Fragment implements
             title = savedInstanceState.getString(titleKey);
             date = savedInstanceState.getString(dateKey);
             body = savedInstanceState.getString(bodyKey);
-            id = savedInstanceState.getInt(idKey);
+            position = savedInstanceState.getInt(positionKey);
             url = savedInstanceState.getString(urlKey);
             transitionName = savedInstanceState.getString(transitionNameKey);
         } else {
             Intent intent = getActivity().getIntent();
-            id = intent.getIntExtra("id", 0);
-            transitionName = intent.getStringExtra("transitionName");
+//            position = intent.getIntExtra("position", 0);
+            transitionName = "photo" + position;
+//            transitionName = intent.getStringExtra("transitionName");
         }
 
         final AppCompatActivity appCompatActivity = ((AppCompatActivity) getActivity());
@@ -392,7 +388,7 @@ public class ArticleDetailFragment extends Fragment implements
 //                                Palette p = Palette.generate(bitmap, 12);
 //                                mMutedColor = p.getDarkMutedColor(0xFF333333);
 //                                mPhotoView.setImageBitmap(imageContainer.getBitmap());
-//                                mRootView.findViewById(R.id.meta_bar)
+//                                mRootView.findViewById(R.position.meta_bar)
 //                                        .setBackgroundColor(mMutedColor);
 //                                updateStatusBar();
 //                            }
@@ -501,7 +497,7 @@ public class ArticleDetailFragment extends Fragment implements
 //
 //                if (viewPager.getAdapter() != null) {
                     ArticleDetailFragment currentFragment = (ArticleDetailFragment) viewPager.getAdapter()
-                            .instantiateItem(viewPager, id);
+                            .instantiateItem(viewPager, position);
 //                }
 
 
@@ -520,7 +516,7 @@ public class ArticleDetailFragment extends Fragment implements
         savedInstanceState.putString(titleKey, title);
         savedInstanceState.putString(bodyKey, body);
         savedInstanceState.putString(dateKey, date);
-        savedInstanceState.putInt(idKey, id);
+        savedInstanceState.putInt(positionKey, position);
         savedInstanceState.putString(urlKey, url);
         savedInstanceState.putString(transitionNameKey, transitionName);
         savedInstanceState.putLong(ARG_ITEM_ID, mItemId);
