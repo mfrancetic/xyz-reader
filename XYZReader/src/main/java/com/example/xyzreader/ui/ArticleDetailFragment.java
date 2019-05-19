@@ -462,7 +462,11 @@ public class ArticleDetailFragment extends Fragment implements
             appCompatActivity.onBackPressed();
             appCompatActivity.supportFinishAfterTransition();
             return true;
+        } else if (id == R.id.refresh) {
+            AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
+            appCompatActivity.recreate();
         }
+
         return super.onOptionsItemSelected(item);
     }
 
