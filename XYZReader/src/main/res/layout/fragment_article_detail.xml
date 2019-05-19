@@ -1,7 +1,4 @@
-<!--<com.example.xyzreader.ui.DrawInsetsFrameLayout--><!--xmlns:android="http://schemas.android.com/apk/res/android"--><!--xmlns:app="http://schemas.android.com/apk/res-auto"--><!--android:id="@+id/draw_insets_frame_layout"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:background="@color/colorPrimaryLight">-->
-
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/draw_insets_frame_layout"
@@ -11,26 +8,21 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_detail"
-        android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
+        style="@style/ToolbarStyle"
         android:layout_marginTop="@dimen/detail_toolbar_margin_top"
-        app:layout_collapseMode="pin"
         android:background="@color/colorPrimaryDark"
-        android:elevation="@dimen/detail_toolbar_elevation"
-        app:popupTheme="@style/AppTheme"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+        app:layout_collapseMode="pin"
+        app:popupTheme="@style/AppTheme" />
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar_layout_detail"
-        android:layout_width="match_parent"
+        style="@style/AppBarLayoutStyle"
         android:layout_height="@dimen/app_bar_layout_height"
-        android:paddingTop="?android:attr/actionBarSize"
-        android:background="@color/colorPrimary">
+        android:paddingTop="?android:attr/actionBarSize">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar_layout_detail"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            style="@style/CollapsingToolbarLayoutStyle"
             app:contentScrim="@color/colorPrimary"
             app:expandedTitleMarginStart="@dimen/detail_collapsing_toolbar_layout_margin_start"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
@@ -43,9 +35,7 @@
 
                 <ImageView
                     android:id="@+id/photo"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
+                    style="@style/DetailImageViewStyle"
                     app:layout_collapseMode="parallax"
                     tools:src="@mipmap/ic_launcher" />
 
@@ -57,16 +47,7 @@
 
                 <LinearLayout
                     android:id="@+id/meta_bar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_marginBottom="@dimen/detail_metabar_vert_padding"
-                    android:background="@color/colorPrimaryDark"
-                    android:orientation="vertical"
-                    android:paddingLeft="@dimen/detail_inner_horiz_margin"
-                    android:paddingTop="@dimen/detail_metabar_vert_padding"
-                    android:paddingRight="@dimen/detail_inner_horiz_margin"
-                    android:paddingBottom="@dimen/detail_metabar_vert_padding"
+                    style="@style/MetaBarStyle"
                     app:layout_collapseMode="parallax">
 
                     <TextView
@@ -90,25 +71,14 @@
                         android:textColor="@color/colorTextByline"
                         tools:text="date, author" />
                 </LinearLayout>
-
             </FrameLayout>
-
-
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
     <com.example.xyzreader.ui.ObservableScrollView
         android:id="@+id/scrollview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:nestedScrollingEnabled="true"
-        android:paddingLeft="@dimen/list_side_margin"
-        android:paddingTop="@dimen/scroll_view_padding_top"
-        android:paddingRight="@dimen/list_side_margin"
-        android:paddingBottom="@dimen/scroll_view_padding_bottom"
-        android:scrollbarStyle="outsideInset">
+        style="@style/ScrollViewStyle">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -117,29 +87,17 @@
 
             <TextView
                 android:id="@+id/article_body"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/detail_inner_horiz_margin"
-                android:layout_marginTop="@dimen/detail_body_top_margin"
-                android:layout_marginRight="@dimen/detail_inner_horiz_margin"
+                style="@style/ArticleBodyTextViewStyle"
                 android:lineSpacingMultiplier="@fraction/detail_body_line_spacing_multiplier"
-                android:paddingBottom="@dimen/detail_body_bottom_margin"
-                android:textColor="@color/colorTextPrimary"
-                android:textColorLink="@color/colorTextPrimary"
-                android:textSize="@dimen/detail_body_text_size"
                 tools:text="article body" />
-
         </LinearLayout>
     </com.example.xyzreader.ui.ObservableScrollView>
 
     <android.support.design.widget.FloatingActionButton
+        style="@style/FloatingActionButtonStyle"
         android:id="@+id/share_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
         android:contentDescription="@string/action_share"
         android:src="@drawable/ic_share"
-        android:stateListAnimator="@animator/fab_state_list_anim"
         app:elevation="@dimen/fab_elevation"
         app:fabSize="normal"
         app:layout_anchor="@id/app_bar_layout_detail"
@@ -147,23 +105,3 @@
         app:pressedTranslationZ="@dimen/fab_press_translation_z" />
 
 </android.support.design.widget.CoordinatorLayout>
-
-
-    <!--<FrameLayoutandroid:layout_width="match_parent"android:layout_height="wrap_content">-->
-
-    <!--<FrameLayoutandroid:id="@+id/photo_container"android:layout_width="match_parent"android:layout_height="wrap_content"android:background="@color/photo_placeholder">suppress AndroidLintContentDescription <ImageViewandroid:id="@+id/photo"android:layout_width="100dp"android:layout_height="100dp" />-->
-
-    <!--<Viewandroid:layout_width="match_parent"android:layout_height="112dp"android:background="@drawable/photo_background_protection" />-->
-
-    <!--</FrameLayout>-->
-
-    <!--<com.example.xyzreader.ui.MaxWidthLinearLayoutandroid:layout_width="match_parent"android:layout_height="wrap_content"android:layout_gravity="center_horizontal"android:layout_marginTop="@dimen/detail_card_top_margin"android:background="#fff"android:elevation="2dp"android:maxWidth="@dimen/detail_card_max_width"android:orientation="vertical">-->
-
-    <!--<LinearLayoutandroid:id="@+id/meta_bar"android:layout_width="match_parent"android:layout_height="wrap_content"android:layout_gravity="bottom"android:layout_marginBottom="@dimen/detail_metabar_vert_padding"android:background="#333"android:orientation="vertical"android:paddingLeft="@dimen/detail_inner_horiz_margin"android:paddingTop="@dimen/detail_metabar_vert_padding"android:paddingRight="@dimen/detail_inner_horiz_margin"android:paddingBottom="@dimen/detail_metabar_vert_padding">-->
-
-
-    <!--</com.example.xyzreader.ui.MaxWidthLinearLayout></FrameLayout>-->
-
-    <!--<android.support.design.widget.FloatingActionButtonandroid:id="@+id/share_fab"android:layout_width="56dp"android:layout_height="56dp"android:layout_gravity="bottom|end"android:layout_marginRight="@dimen/fab_margin"android:layout_marginBottom="@dimen/fab_margin"android:background="@drawable/add_fab_background"android:contentDescription="@string/action_share"android:elevation="@dimen/fab_elevation"android:src="@drawable/ic_share"android:stateListAnimator="@anim/fab_state_list_anim" />-->
-
-    <!--</com.example.xyzreader.ui.DrawInsetsFrameLayout>-->
