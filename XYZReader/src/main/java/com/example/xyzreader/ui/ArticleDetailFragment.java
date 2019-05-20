@@ -1,12 +1,12 @@
 package com.example.xyzreader.ui;
 
+import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.app.LoaderManager;
 import android.app.SharedElementCallback;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 
@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -53,41 +54,36 @@ public class ArticleDetailFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
     private static final String TAG = "ArticleDetailFragment";
 
-    public static final String ARG_ITEM_ID = "item_id";
+    private static final String ARG_ITEM_ID = "item_id";
     private Cursor mCursor;
     private long mItemId;
     private View mRootView;
-    private int mMutedColor = 0xFF333333;
     private ObservableScrollView mScrollView;
     private ViewPager viewPager;
-    private ColorDrawable mStatusBarColorDrawable;
-    private int mTopInset;
-    private View mPhotoContainerView;
     private ImageView mPhotoView;
-    private int mScrollY;
     private int position;
     private String transitionName;
-    private String transitionNameKey = "transitionName";
-    private String titleKey = "title";
-    private String authorKey = "author";
-    private String dateKey = "date";
+    private final String transitionNameKey = "transitionName";
+    private final String titleKey = "title";
+    private final String authorKey = "author";
+    private final String dateKey = "date";
     private String title;
     private String date;
     private String author;
-    private String bodyKey = "body";
+    private final String bodyKey = "body";
     private String body;
     private static final String positionKey = "position";
-    private String urlKey = "url";
+    private final String urlKey = "url";
     private String url;
     private static final String photoKey = "photo";
-    private boolean mIsCard = false;
-    private int mStatusBarFullOpacityBottom;
 
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
+    @SuppressLint("SimpleDateFormat")
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
     // Use default locale format
-    private SimpleDateFormat outputFormat = new SimpleDateFormat();
+    @SuppressLint("SimpleDateFormat")
+    private final SimpleDateFormat outputFormat = new SimpleDateFormat();
     // Most time functions can only handle 1902 - 2037
-    private GregorianCalendar START_OF_EPOCH = new GregorianCalendar(2, 1, 1);
+    private final GregorianCalendar START_OF_EPOCH = new GregorianCalendar(2, 1, 1);
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -117,13 +113,13 @@ public class ArticleDetailFragment extends Fragment implements
         if (getArguments().containsKey(positionKey)) {
             position = getArguments().getInt(positionKey);
         }
-        mIsCard = getResources().getBoolean(R.bool.detail_is_card);
-        mStatusBarFullOpacityBottom = getResources().getDimensionPixelSize(
+        boolean mIsCard = getResources().getBoolean(R.bool.detail_is_card);
+        int mStatusBarFullOpacityBottom = getResources().getDimensionPixelSize(
                 R.dimen.detail_card_top_margin);
         setHasOptionsMenu(true);
     }
 
-    public ArticleDetailActivity getActivityCast() {
+    private ArticleDetailActivity getActivityCast() {
         return (ArticleDetailActivity) getActivity();
     }
 
@@ -162,7 +158,6 @@ public class ArticleDetailFragment extends Fragment implements
             transitionName = photoKey + position;
         }
 
-        final AppCompatActivity appCompatActivity = ((AppCompatActivity) getActivity());
         mPhotoView = mRootView.findViewById(R.id.photo);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -172,22 +167,22 @@ public class ArticleDetailFragment extends Fragment implements
 
         /* Find the toolbar, set it as the support action bar and set the navigationIcon */
         Toolbar toolbar = mRootView.findViewById(R.id.toolbar_detail);
-        appCompatActivity.setSupportActionBar(toolbar);
+        getActivityCast().setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
 
         /* Set the NavigationOnClickListener to the toolbar */
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                appCompatActivity.onBackPressed();
+                getActivityCast().onBackPressed();
             }
         });
 
         /* Set the display home button and title of the supportActionBar */
-        if (appCompatActivity.getSupportActionBar() != null) {
-            appCompatActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            appCompatActivity.getSupportActionBar().setHomeButtonEnabled(true);
-            appCompatActivity.getSupportActionBar().setTitle("");
+        if (getActivityCast().getSupportActionBar() != null) {
+            getActivityCast().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getActivityCast().getSupportActionBar().setHomeButtonEnabled(true);
+            getActivityCast().getSupportActionBar().setTitle("");
         }
         /* Inflate the menu from the R.menu.main */
         toolbar.inflateMenu(R.menu.main);
@@ -196,13 +191,12 @@ public class ArticleDetailFragment extends Fragment implements
         mScrollView.setCallbacks(new ObservableScrollView.Callbacks() {
             @Override
             public void onScrollChanged() {
-                mScrollY = mScrollView.getScrollY();
-                updateStatusBar();
+                mScrollView.getScrollY();
             }
         });
 
-        mPhotoContainerView = mRootView.findViewById(R.id.photo_container);
-        mStatusBarColorDrawable = new ColorDrawable(0);
+        mRootView.findViewById(R.id.photo_container);
+        ColorDrawable mStatusBarColorDrawable = new ColorDrawable(0);
 
         /* Set an OnClickListener to the share_fab button*/
         mRootView.findViewById(R.id.share_fab).setOnClickListener(new View.OnClickListener() {
@@ -215,36 +209,7 @@ public class ArticleDetailFragment extends Fragment implements
             }
         });
         bindViews();
-        updateStatusBar();
         return mRootView;
-    }
-
-    private void updateStatusBar() {
-        int color = 0;
-        if (mPhotoView != null && mTopInset != 0 && mScrollY > 0) {
-            float f = progress(mScrollY,
-                    mStatusBarFullOpacityBottom - mTopInset * 3,
-                    mStatusBarFullOpacityBottom - mTopInset);
-            color = Color.argb((int) (255 * f),
-                    (int) (Color.red(mMutedColor) * 0.9),
-                    (int) (Color.green(mMutedColor) * 0.9),
-                    (int) (Color.blue(mMutedColor) * 0.9));
-        }
-        mStatusBarColorDrawable.setColor(color);
-    }
-
-    static float progress(float v, float min, float max) {
-        return constrain((v - min) / (max - min), 0, 1);
-    }
-
-    static float constrain(float val, float min, float max) {
-        if (val < min) {
-            return min;
-        } else if (val > max) {
-            return max;
-        } else {
-            return val;
-        }
     }
 
     private Date parsePublishedDate() {
@@ -323,7 +288,6 @@ public class ArticleDetailFragment extends Fragment implements
                 public void onError(Exception e) {
                 }
             });
-            updateStatusBar();
         } else {
             mRootView.setVisibility(View.GONE);
             titleView.setText("N/A");
@@ -410,7 +374,7 @@ public class ArticleDetailFragment extends Fragment implements
         setEnterSharedElementCallback(new SharedElementCallback() {
             @Override
             public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
-                ArticleDetailFragment currentFragment = (ArticleDetailFragment) viewPager.getAdapter()
+                ArticleDetailFragment currentFragment = (ArticleDetailFragment) Objects.requireNonNull(viewPager.getAdapter())
                         .instantiateItem(viewPager, position);
 
                 View view = currentFragment.getView();

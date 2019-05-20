@@ -2,17 +2,14 @@
     <!-- The name of the app -->
     <string name="app_name" translatable="false">XYZ Reader</string>
     <!-- The welcome message -->
-    <string name="welcome_xyz_reader">Welcome to XYZ Reader!</string>
     <!-- Refresh action of the menu -->
     <string name="action_refresh">Refresh</string>
     <!-- Settings title -->
-    <string name="action_settings">Settings</string>
     <!-- Share action in the Detail Activity -->
     <string name="action_share">Share</string>
     <!-- Snackbar message that informs about updating the article list -->
     <string name="snackbar_text_update">The article list has been updated</string>
     <!-- Up button text -->
-    <string name="up">Up</string>
     <!-- Content description of the photo -->
     <string name="transition_photo">Transition photo</string>
     <!-- Photo content description -->

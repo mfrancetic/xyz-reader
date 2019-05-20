@@ -30,6 +30,7 @@ import android.text.TextUtils;
  * appended clause is combined using {@code AND}. This class is <em>not</em>
  * thread safe.
  */
+@SuppressWarnings("unused")
 public class SelectionBuilder {
     private String mTable = null;
     private HashMap<String, String> mProjectionMap;
@@ -39,6 +40,7 @@ public class SelectionBuilder {
     /**
      * Reset any internal state, allowing this builder to be recycled.
      */
+    @SuppressWarnings("unused")
     public SelectionBuilder reset() {
         mTable = null;
         if (mProjectionMap != null) {
@@ -76,9 +78,7 @@ public class SelectionBuilder {
         mSelection.append("(").append(selection).append(")");
         if (selectionArgs != null) {
             ensureSelectionArgs();
-            for (String arg : selectionArgs) {
-                mSelectionArgs.add(arg);
-            }
+            mSelectionArgs.addAll(Arrays.asList(selectionArgs));
         }
 
         return this;
@@ -97,7 +97,7 @@ public class SelectionBuilder {
 
     private void ensureProjectionMap() {
         if (mProjectionMap == null) {
-            mProjectionMap = new HashMap<String, String>();
+            mProjectionMap = new HashMap<>();
         }
     }
 
@@ -109,7 +109,7 @@ public class SelectionBuilder {
 
     private void ensureSelectionArgs() {
         if (mSelectionArgs == null) {
-            mSelectionArgs = new ArrayList<String>();
+            mSelectionArgs = new ArrayList<>();
         }
     }
 

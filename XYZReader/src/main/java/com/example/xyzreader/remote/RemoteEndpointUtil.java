@@ -50,6 +50,7 @@ public class RemoteEndpointUtil {
                 .build();
 
         Response response = client.newCall(request).execute();
+        assert response.body() != null;
         return response.body().string();
     }
 }

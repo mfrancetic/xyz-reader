@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="action_refresh">Osvježi</string>
-    <string name="action_settings">Postavke</string>
     <string name="action_share">Podijeli</string>
     <string name="snackbar_text_update">Lista članaka je ažurirana</string>
     <string name="transition_photo">Slika</string>
-    <string name="up">Gore</string>
-    <string name="welcome_xyz_reader">Dobrodošli u XYZ Reader!</string>
     <string name="photo_content_description">Slika članka</string>
 </resources>

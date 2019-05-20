@@ -1,5 +1,6 @@
 package com.example.xyzreader.ui;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.app.LoaderManager;
 import android.app.SharedElementCallback;
@@ -16,7 +17,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.format.DateUtils;
 import android.transition.TransitionInflater;
@@ -47,30 +47,27 @@ public class ArticleListActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final String TAG = ArticleListActivity.class.toString();
-    private Toolbar mToolbar;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private CoordinatorLayout coordinatorLayout;
     private RecyclerView mRecyclerView;
-    private String photoKey = "photo";
+    private final String photoKey = "photo";
     private String transitionName;
     private DynamicHeightNetworkImageView sharedView;
     private int id;
-    private String transitionNameKey = "transitionName";
-    private String title;
-    private String urlKey = "url";
+    private final String transitionNameKey = "transitionName";
     private String url;
-    private String date;
-    private String author;
 
-    private String idKey = "id";
+    private final String idKey = "id";
 
     private static final String bundleKey = "bundle";
 
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
+    @SuppressLint("SimpleDateFormat")
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
     // Use default locale format
-    private SimpleDateFormat outputFormat = new SimpleDateFormat();
+    @SuppressLint("SimpleDateFormat")
+    private final SimpleDateFormat outputFormat = new SimpleDateFormat();
     // Most time functions can only handle 1902 - 2037
-    private GregorianCalendar START_OF_EPOCH = new GregorianCalendar(2, 1, 1);
+    private final GregorianCalendar START_OF_EPOCH = new GregorianCalendar(2, 1, 1);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +75,7 @@ public class ArticleListActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_article_list);
 
         /* Find the views by using their ID's */
-        mToolbar = findViewById(R.id.toolbar);
+        findViewById(R.id.toolbar);
         coordinatorLayout = findViewById(R.id.coordinator_layout);
         mSwipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
         sharedView = findViewById(R.id.thumbnail);
@@ -115,7 +112,7 @@ public class ArticleListActivity extends AppCompatActivity implements
 
     private boolean mIsRefreshing = false;
 
-    private BroadcastReceiver mRefreshingReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver mRefreshingReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (UpdaterService.BROADCAST_ACTION_STATE_CHANGE.equals(intent.getAction())) {
@@ -162,7 +159,7 @@ public class ArticleListActivity extends AppCompatActivity implements
     }
 
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {
-        private Cursor mCursor;
+        private final Cursor mCursor;
 
         Adapter(Cursor cursor) {
             mCursor = cursor;
@@ -203,7 +200,7 @@ public class ArticleListActivity extends AppCompatActivity implements
         }
 
         private Date parsePublishedDate() {
-            date = mCursor.getString(ArticleLoader.Query.PUBLISHED_DATE);
+            String date = mCursor.getString(ArticleLoader.Query.PUBLISHED_DATE);
             try {
                 return dateFormat.parse(date);
             } catch (ParseException ex) {
@@ -216,10 +213,10 @@ public class ArticleListActivity extends AppCompatActivity implements
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             mCursor.moveToPosition(position);
-            title = mCursor.getString(ArticleLoader.Query.TITLE);
+            String title = mCursor.getString(ArticleLoader.Query.TITLE);
             holder.titleView.setText(title);
             Date publishedDate = parsePublishedDate();
-            author = mCursor.getString(ArticleLoader.Query.AUTHOR);
+            String author = mCursor.getString(ArticleLoader.Query.AUTHOR);
             if (!publishedDate.before(START_OF_EPOCH.getTime())) {
 
                 holder.subtitleView.setText(Html.fromHtml(
@@ -250,9 +247,9 @@ public class ArticleListActivity extends AppCompatActivity implements
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        DynamicHeightNetworkImageView thumbnailView;
-        TextView titleView;
-        TextView subtitleView;
+        final DynamicHeightNetworkImageView thumbnailView;
+        final TextView titleView;
+        final TextView subtitleView;
 
         ViewHolder(View view) {
             super(view);
@@ -287,6 +284,7 @@ public class ArticleListActivity extends AppCompatActivity implements
     protected void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putString(transitionNameKey, transitionName);
         savedInstanceState.putInt(idKey, id);
+        String urlKey = "url";
         savedInstanceState.putString(urlKey, url);
         super.onSaveInstanceState(savedInstanceState);
     }

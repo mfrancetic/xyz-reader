@@ -11,7 +11,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,18 +68,14 @@ public class ItemsProvider extends ContentProvider {
     public Uri insert(Uri uri, ContentValues values) {
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
-        switch (match) {
-            case ITEMS: {
-                final long _id = db.insertOrThrow(Tables.ITEMS, null, values);
-                if (getContext() != null) {
-                    getContext().getContentResolver().notifyChange(uri, null);
-                }
-                return ItemsContract.Items.buildItemUri(_id);
+        if (match == ITEMS) {
+            final long _id = db.insertOrThrow(Tables.ITEMS, null, values);
+            if (getContext() != null) {
+                getContext().getContentResolver().notifyChange(uri, null);
             }
-            default: {
-                throw new UnsupportedOperationException("Unknown uri: " + uri);
-            }
+            return ItemsContract.Items.buildItemUri(_id);
         }
+        throw new UnsupportedOperationException("Unknown uri: " + uri);
     }
 
     @Override

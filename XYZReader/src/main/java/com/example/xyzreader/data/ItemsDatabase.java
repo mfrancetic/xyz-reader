@@ -9,7 +9,7 @@ import static com.example.xyzreader.data.ItemsProvider.Tables;
 /**
  * Class for creating a database xyzreader.db
  */
-public class ItemsDatabase extends SQLiteOpenHelper {
+class ItemsDatabase extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "xyzreader.db";
     private static final int DATABASE_VERSION = 2;
 

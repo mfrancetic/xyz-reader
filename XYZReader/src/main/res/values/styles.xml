@@ -90,13 +90,13 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">bottom</item>
-        <item name="android:layout_marginBottom">@dimen/detail_metabar_vert_padding</item>
+        <item name="android:layout_marginBottom">@dimen/detail_metabar_vertical_padding</item>
         <item name="android:background">@color/colorPrimaryDark</item>
         <item name="android:orientation">vertical</item>
-        <item name="android:paddingLeft">@dimen/detail_inner_horiz_margin</item>
-        <item name="android:paddingTop">@dimen/detail_metabar_vert_padding</item>
-        <item name="android:paddingRight">@dimen/detail_inner_horiz_margin</item>
-        <item name="android:paddingBottom">@dimen/detail_metabar_vert_padding</item>
+        <item name="android:paddingLeft">@dimen/detail_inner_horizontal_margin</item>
+        <item name="android:paddingTop">@dimen/detail_metabar_vertical_padding</item>
+        <item name="android:paddingRight">@dimen/detail_inner_horizontal_margin</item>
+        <item name="android:paddingBottom">@dimen/detail_metabar_vertical_padding</item>
     </style>
 
     <!-- Style of the ScrollView -->
@@ -115,9 +115,9 @@
     <style name="ArticleBodyTextViewStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginLeft">@dimen/detail_inner_horiz_margin</item>
+        <item name="android:layout_marginLeft">@dimen/detail_inner_horizontal_margin</item>
         <item name="android:layout_marginTop">@dimen/detail_body_top_margin</item>
-        <item name="android:layout_marginRight">@dimen/detail_inner_horiz_margin</item>
+        <item name="android:layout_marginRight">@dimen/detail_inner_horizontal_margin</item>
         <item name="android:paddingBottom">@dimen/detail_body_bottom_margin</item>
         <item name="android:textColor">@color/colorTextPrimary</item>
         <item name="android:textColorLink">@color/colorTextPrimary</item>

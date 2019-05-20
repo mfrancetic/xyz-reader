@@ -6,12 +6,10 @@
     android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar_layout"
         style="@style/AppBarLayoutStyle"
         android:layout_height="@dimen/app_bar_layout_main_height">
 
         <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/collapsing_toolbar_layout"
             style="@style/CollapsingToolbarLayoutStyle"
             app:collapsedTitleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
             app:contentScrim="@color/colorPrimary"
