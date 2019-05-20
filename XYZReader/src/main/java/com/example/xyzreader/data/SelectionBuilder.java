@@ -145,7 +145,7 @@ public class SelectionBuilder {
      */
     private String[] getSelectionArgs() {
         if (mSelectionArgs != null) {
-            return mSelectionArgs.toArray(new String[mSelectionArgs.size()]);
+            return mSelectionArgs.toArray(new String[0]);
         } else {
             return null;
         }

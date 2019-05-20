@@ -19,6 +19,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+@SuppressWarnings("deprecation")
 public class UpdaterService extends IntentService {
     private static final String TAG = "UpdaterService";
 

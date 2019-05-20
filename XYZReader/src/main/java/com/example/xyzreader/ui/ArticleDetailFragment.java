@@ -20,6 +20,7 @@ import java.util.Objects;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -63,6 +64,7 @@ public class ArticleDetailFragment extends Fragment implements
     private ImageView mPhotoView;
     private int position;
     private String transitionName;
+    private CoordinatorLayout coordinatorLayoutDetail;
     private final String transitionNameKey = "transitionName";
     private final String titleKey = "title";
     private final String authorKey = "author";
@@ -113,9 +115,7 @@ public class ArticleDetailFragment extends Fragment implements
         if (getArguments().containsKey(positionKey)) {
             position = getArguments().getInt(positionKey);
         }
-        boolean mIsCard = getResources().getBoolean(R.bool.detail_is_card);
-        int mStatusBarFullOpacityBottom = getResources().getDimensionPixelSize(
-                R.dimen.detail_card_top_margin);
+        getResources().getBoolean(R.bool.detail_is_card);
         setHasOptionsMenu(true);
     }
 
@@ -138,6 +138,7 @@ public class ArticleDetailFragment extends Fragment implements
                              Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
         viewPager = mRootView.findViewById(R.id.pager);
+        coordinatorLayoutDetail = mRootView.findViewById(R.id.coordinator_layout_detail);
 
         prepareSharedElementTransition();
 
@@ -196,7 +197,6 @@ public class ArticleDetailFragment extends Fragment implements
         });
 
         mRootView.findViewById(R.id.photo_container);
-        ColorDrawable mStatusBarColorDrawable = new ColorDrawable(0);
 
         /* Set an OnClickListener to the share_fab button*/
         mRootView.findViewById(R.id.share_fab).setOnClickListener(new View.OnClickListener() {

@@ -1,4 +1,5 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/coordinator_layout_detail"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,13 +10,15 @@
         android:id="@+id/toolbar_detail"
         style="@style/ToolbarStyle"
         android:layout_marginTop="@dimen/detail_toolbar_margin_top"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:background="@color/colorPrimaryDark"
         app:layout_collapseMode="pin"
-        app:popupTheme="@style/AppTheme" />
+        />
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar_layout_detail"
         style="@style/AppBarLayoutStyle"
+        app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
         android:layout_height="@dimen/app_bar_layout_height"
         android:paddingTop="?android:attr/actionBarSize">
 
@@ -78,6 +81,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 

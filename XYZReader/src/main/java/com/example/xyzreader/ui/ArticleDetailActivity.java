@@ -25,6 +25,7 @@ import java.util.Objects;
 /**
  * An activity representing a single Article detail screen, letting you swipe between articles.
  */
+@SuppressWarnings("ALL")
 public class ArticleDetailActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
 

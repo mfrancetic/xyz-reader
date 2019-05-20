@@ -76,7 +76,7 @@ public class ArticleListActivity extends AppCompatActivity implements
 
         /* Find the views by using their ID's */
         findViewById(R.id.toolbar);
-        coordinatorLayout = findViewById(R.id.coordinator_layout);
+        coordinatorLayout = findViewById(R.id.coordinator_layout_main);
         mSwipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
         sharedView = findViewById(R.id.thumbnail);
         mRecyclerView = findViewById(R.id.recycler_view);
