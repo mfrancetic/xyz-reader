@@ -5,6 +5,9 @@ import android.util.AttributeSet;
 
 import com.android.volley.toolbox.NetworkImageView;
 
+/**
+ * DynamicHeightNetworkImageView class used in the ArticleListActivity
+ */
 public class DynamicHeightNetworkImageView extends NetworkImageView {
     private float mAspectRatio = 1.5f;
 

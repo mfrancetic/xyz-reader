@@ -13,13 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.example.xyzreader.ui;
 
 import android.content.Context;
-import android.os.Parcelable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.ScrollView;
 
 /**

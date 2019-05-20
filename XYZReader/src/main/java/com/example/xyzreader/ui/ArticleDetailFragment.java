@@ -54,54 +54,32 @@ public class ArticleDetailFragment extends Fragment implements
     private static final String TAG = "ArticleDetailFragment";
 
     public static final String ARG_ITEM_ID = "item_id";
-    private static final float PARALLAX_FACTOR = 1.25f;
-
     private Cursor mCursor;
     private long mItemId;
     private View mRootView;
     private int mMutedColor = 0xFF333333;
     private ObservableScrollView mScrollView;
-
     private ViewPager viewPager;
-//    private DrawInsetsFrameLayout mDrawInsetsFrameLayout;
-
-    private Toolbar toolbar;
-
     private ColorDrawable mStatusBarColorDrawable;
-
     private int mTopInset;
     private View mPhotoContainerView;
     private ImageView mPhotoView;
     private int mScrollY;
-
     private int position;
-
     private String transitionName;
-
     private String transitionNameKey = "transitionName";
-
     private String titleKey = "title";
-
     private String authorKey = "author";
-
     private String dateKey = "date";
-
     private String title;
-
     private String date;
-
     private String author;
-
     private String bodyKey = "body";
-
     private String body;
-
     private static final String positionKey = "position";
-
     private String urlKey = "url";
-
     private String url;
-
+    private static final String photoKey = "photo";
     private boolean mIsCard = false;
     private int mStatusBarFullOpacityBottom;
 
@@ -109,7 +87,7 @@ public class ArticleDetailFragment extends Fragment implements
     // Use default locale format
     private SimpleDateFormat outputFormat = new SimpleDateFormat();
     // Most time functions can only handle 1902 - 2037
-    private GregorianCalendar START_OF_EPOCH = new GregorianCalendar(2,1,1);
+    private GregorianCalendar START_OF_EPOCH = new GregorianCalendar(2, 1, 1);
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -120,7 +98,6 @@ public class ArticleDetailFragment extends Fragment implements
 
     public static ArticleDetailFragment newInstance(long itemId, int position) {
         Bundle arguments = new Bundle();
-
         arguments.putLong(ARG_ITEM_ID, itemId);
         arguments.putInt(positionKey, position);
         ArticleDetailFragment fragment = new ArticleDetailFragment();
@@ -134,20 +111,16 @@ public class ArticleDetailFragment extends Fragment implements
 
         if (getArguments().containsKey(ARG_ITEM_ID)) {
             mItemId = getArguments().getLong(ARG_ITEM_ID);
-        } else if (savedInstanceState != null){
+        } else if (savedInstanceState != null) {
             mItemId = savedInstanceState.getLong(ARG_ITEM_ID);
         }
-
         if (getArguments().containsKey(positionKey)) {
             position = getArguments().getInt(positionKey);
         }
-
         mIsCard = getResources().getBoolean(R.bool.detail_is_card);
         mStatusBarFullOpacityBottom = getResources().getDimensionPixelSize(
                 R.dimen.detail_card_top_margin);
         setHasOptionsMenu(true);
-
-
     }
 
     public ArticleDetailActivity getActivityCast() {
@@ -157,30 +130,18 @@ public class ArticleDetailFragment extends Fragment implements
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         // In support library r8, calling initLoader for a fragment in a FragmentPagerAdapter in
         // the fragment's onCreate may cause the same LoaderManager to be dealt to multiple
         // fragments because their mIndex is -1 (haven't been added to the activity yet). Thus,
         // we do this in onActivityCreated.
-//        if (savedInstanceState == null) {
-            getLoaderManager().initLoader(0, null, this);
-//        }
+        getLoaderManager().initLoader(0, null, this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
-//        mDrawInsetsFrameLayout = (DrawInsetsFrameLayout)
-//                mRootView.findViewById(R.position.draw_insets_frame_layout);
-//        mDrawInsetsFrameLayout.setOnInsetsCallback(new DrawInsetsFrameLayout.OnInsetsCallback() {
-//            @Override
-//            public void onInsetsChanged(Rect insets) {
-//                mTopInset = insets.top;
-//            }
-//        });
-
-        viewPager = (ViewPager) mRootView.findViewById(R.id.pager);
+        viewPager = mRootView.findViewById(R.id.pager);
 
         prepareSharedElementTransition();
 
@@ -188,6 +149,7 @@ public class ArticleDetailFragment extends Fragment implements
             postponeEnterTransition();
         }
 
+        /* If the savedInstanceState exists, retrieve the values under their key names */
         if (savedInstanceState != null) {
             author = savedInstanceState.getString(authorKey);
             title = savedInstanceState.getString(titleKey);
@@ -197,23 +159,23 @@ public class ArticleDetailFragment extends Fragment implements
             url = savedInstanceState.getString(urlKey);
             transitionName = savedInstanceState.getString(transitionNameKey);
         } else {
-            Intent intent = getActivity().getIntent();
-//            position = intent.getIntExtra("position", 0);
-            transitionName = "photo" + position;
-//            transitionName = intent.getStringExtra("transitionName");
+            transitionName = photoKey + position;
         }
 
         final AppCompatActivity appCompatActivity = ((AppCompatActivity) getActivity());
-        mPhotoView = (ImageView) mRootView.findViewById(R.id.photo);
+        mPhotoView = mRootView.findViewById(R.id.photo);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            /* Set the transitionName to the photoView */
             mPhotoView.setTransitionName(transitionName);
         }
 
+        /* Find the toolbar, set it as the support action bar and set the navigationIcon */
         Toolbar toolbar = mRootView.findViewById(R.id.toolbar_detail);
         appCompatActivity.setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
 
+        /* Set the NavigationOnClickListener to the toolbar */
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -221,31 +183,28 @@ public class ArticleDetailFragment extends Fragment implements
             }
         });
 
+        /* Set the display home button and title of the supportActionBar */
         if (appCompatActivity.getSupportActionBar() != null) {
             appCompatActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             appCompatActivity.getSupportActionBar().setHomeButtonEnabled(true);
             appCompatActivity.getSupportActionBar().setTitle("");
-//            toolbar.setNavigationIcon(appCompatActivity.getDrawerToggleDelegate().getThemeUpIndicator());
         }
+        /* Inflate the menu from the R.menu.main */
         toolbar.inflateMenu(R.menu.main);
 
-//        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        mScrollView = (ObservableScrollView) mRootView.findViewById(R.id.scrollview);
+        mScrollView = mRootView.findViewById(R.id.scrollview);
         mScrollView.setCallbacks(new ObservableScrollView.Callbacks() {
             @Override
             public void onScrollChanged() {
                 mScrollY = mScrollView.getScrollY();
-//                getActivityCast().onUpButtonFloorChanged(mItemId, ArticleDetailFragment.this);
-//                mPhotoContainerView.setTranslationY((int) (mScrollY - mScrollY / PARALLAX_FACTOR));
                 updateStatusBar();
             }
         });
 
         mPhotoContainerView = mRootView.findViewById(R.id.photo_container);
-
         mStatusBarColorDrawable = new ColorDrawable(0);
 
+        /* Set an OnClickListener to the share_fab button*/
         mRootView.findViewById(R.id.share_fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -255,11 +214,8 @@ public class ArticleDetailFragment extends Fragment implements
                         .getIntent(), getString(R.string.action_share)));
             }
         });
-
         bindViews();
         updateStatusBar();
-
-
         return mRootView;
     }
 
@@ -275,7 +231,6 @@ public class ArticleDetailFragment extends Fragment implements
                     (int) (Color.blue(mMutedColor) * 0.9));
         }
         mStatusBarColorDrawable.setColor(color);
-//        mDrawInsetsFrameLayout.setInsetBackground(mStatusBarColorDrawable);
     }
 
     static float progress(float v, float min, float max) {
@@ -309,15 +264,13 @@ public class ArticleDetailFragment extends Fragment implements
         if (mRootView == null) {
             return;
         }
-
-        TextView titleView = (TextView) mRootView.findViewById(R.id.article_title);
-        TextView bylineView = (TextView) mRootView.findViewById(R.id.article_byline);
+        /* Find the views using their ID's */
+        TextView titleView = mRootView.findViewById(R.id.article_title);
+        TextView bylineView = mRootView.findViewById(R.id.article_byline);
         bylineView.setMovementMethod(new LinkMovementMethod());
-        TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
-
+        TextView bodyView = mRootView.findViewById(R.id.article_body);
 
         bodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Rosario-Regular.ttf"));
-
 
         if (mCursor != null) {
             mRootView.setAlpha(0);
@@ -345,64 +298,36 @@ public class ArticleDetailFragment extends Fragment implements
                 // If date is before 1902, just show the string
                 bylineView.setText(Html.fromHtml(
                         outputFormat.format(publishedDate) + " by <font color='#ffffff'>"
-                        + author
+                                + author
                                 + "</font>"));
-
             }
             if (body == null) {
                 body = String.valueOf(Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY)));
             }
             bodyView.setText(body.replaceAll("(\r\n|\n)", "<br />"));
 
-//            bodyView.setText(Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY).replaceAll("(\r\n|\n)", "<br />")));
-
             if (url == null) {
                 url = mCursor.getString(ArticleLoader.Query.PHOTO_URL);
             }
 
+            /* Using the Picasso library, load the photoView */
             Picasso.get().load(url).into(mPhotoView, new Callback() {
                 @Override
                 public void onSuccess() {
-                   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                       getParentFragment().startPostponedEnterTransition();
-                       scheduleStartPostponedTransition(mPhotoView);
-                   }
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        scheduleStartPostponedTransition(mPhotoView);
+                    }
                 }
 
                 @Override
                 public void onError(Exception e) {
-
                 }
             });
-
             updateStatusBar();
-
-
-
-//            ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
-//                    .get(mCursor.getString(ArticleLoader.Query.PHOTO_URL), new ImageLoader.ImageListener() {
-//                        @Override
-//                        public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
-//                            Bitmap bitmap = imageContainer.getBitmap();
-//                            if (bitmap != null) {
-//                                Palette p = Palette.generate(bitmap, 12);
-//                                mMutedColor = p.getDarkMutedColor(0xFF333333);
-//                                mPhotoView.setImageBitmap(imageContainer.getBitmap());
-//                                mRootView.findViewById(R.position.meta_bar)
-//                                        .setBackgroundColor(mMutedColor);
-//                                updateStatusBar();
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onErrorResponse(VolleyError volleyError) {
-//
-//                        }
-//                    });
         } else {
             mRootView.setVisibility(View.GONE);
             titleView.setText("N/A");
-            bylineView.setText("N/A" );
+            bylineView.setText("N/A");
             bodyView.setText("N/A");
         }
     }
@@ -420,14 +345,12 @@ public class ArticleDetailFragment extends Fragment implements
             }
             return;
         }
-
         mCursor = cursor;
         if (mCursor != null && !mCursor.moveToFirst()) {
             Log.e(TAG, "Error reading item detail cursor");
             mCursor.close();
             mCursor = null;
         }
-
         bindViews();
     }
 
@@ -437,19 +360,9 @@ public class ArticleDetailFragment extends Fragment implements
         bindViews();
     }
 
-    public int getUpButtonFloor() {
-        if (mPhotoContainerView == null || mPhotoView.getHeight() == 0) {
-            return Integer.MAX_VALUE;
-        }
-
-        // account for parallax
-        return mIsCard
-                ? (int) mPhotoContainerView.getTranslationY() + mPhotoView.getHeight() - mScrollY
-                : mPhotoView.getHeight() - mScrollY;
-    }
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        /* Inflate the menu */
         inflater.inflate(R.menu.main, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -458,20 +371,21 @@ public class ArticleDetailFragment extends Fragment implements
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.home) {
+            /* When clicking the home button in the menu, go back to the parent activity */
             AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
             appCompatActivity.onBackPressed();
             appCompatActivity.supportFinishAfterTransition();
             return true;
         } else if (id == R.id.refresh) {
+            /* When clicking the refresh button in the menu, recreate the activity */
             AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
             appCompatActivity.recreate();
         }
-
         return super.onOptionsItemSelected(item);
     }
 
-
     private void scheduleStartPostponedTransition(final View sharedElement) {
+        /* Start the postponedEnterTransition on the sharedElement */
         sharedElement.getViewTreeObserver().addOnPreDrawListener(
                 new ViewTreeObserver.OnPreDrawListener() {
                     @Override
@@ -485,25 +399,19 @@ public class ArticleDetailFragment extends Fragment implements
                 });
     }
 
+    /**
+     * Prepare the shared element transition while using the EnterSharedElementCallback
+     */
     private void prepareSharedElementTransition() {
         Transition transition = TransitionInflater.from(getActivity().getBaseContext()).inflateTransition(
                 R.transition.image_shared_element_transition
         );
         setSharedElementEnterTransition(transition);
-
         setEnterSharedElementCallback(new SharedElementCallback() {
             @Override
             public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
-
-//                android.support.v4.app.Fragment currentFragment = getActivity().a
-
-//                ViewPager viewPager = getview.getviewp
-//
-//                if (viewPager.getAdapter() != null) {
-                    ArticleDetailFragment currentFragment = (ArticleDetailFragment) viewPager.getAdapter()
-                            .instantiateItem(viewPager, position);
-//                }
-
+                ArticleDetailFragment currentFragment = (ArticleDetailFragment) viewPager.getAdapter()
+                        .instantiateItem(viewPager, position);
 
                 View view = currentFragment.getView();
                 if (view == null) {
@@ -526,7 +434,4 @@ public class ArticleDetailFragment extends Fragment implements
         savedInstanceState.putLong(ARG_ITEM_ID, mItemId);
         super.onSaveInstanceState(savedInstanceState);
     }
-
-
-
 }

@@ -73,7 +73,6 @@ public class UpdaterService extends IntentService {
                 values.put(ItemsContract.Items.PUBLISHED_DATE, object.getString("published_date"));
                 cpo.add(ContentProviderOperation.newInsert(dirUri).withValues(values).build());
             }
-
             getContentResolver().applyBatch(ItemsContract.CONTENT_AUTHORITY, cpo);
 
         } catch (JSONException | RemoteException | OperationApplicationException e) {
