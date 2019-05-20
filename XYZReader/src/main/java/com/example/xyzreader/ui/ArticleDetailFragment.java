@@ -8,8 +8,6 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,7 +18,6 @@ import java.util.Objects;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -64,7 +61,6 @@ public class ArticleDetailFragment extends Fragment implements
     private ImageView mPhotoView;
     private int position;
     private String transitionName;
-    private CoordinatorLayout coordinatorLayoutDetail;
     private final String transitionNameKey = "transitionName";
     private final String titleKey = "title";
     private final String authorKey = "author";
@@ -138,7 +134,7 @@ public class ArticleDetailFragment extends Fragment implements
                              Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
         viewPager = mRootView.findViewById(R.id.pager);
-        coordinatorLayoutDetail = mRootView.findViewById(R.id.coordinator_layout_detail);
+        mRootView.findViewById(R.id.coordinator_layout_detail);
 
         prepareSharedElementTransition();
 

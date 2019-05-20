@@ -7,8 +7,6 @@
     <dimen name="app_bar_layout_height">270dp</dimen>
     <dimen name="thumbnail_dimension">150dp</dimen>
     <dimen name="scroll_view_padding_top">144dp</dimen>
-    <dimen name="detail_photo_height">384dp</dimen>
-    <dimen name="detail_card_top_margin">384dp</dimen>
     <dimen name="detail_inner_horizontal_margin">72dp</dimen>
     <dimen name="detail_metabar_vertical_padding">32dp</dimen>
     <dimen name="detail_metabar_title_bottom_padding">8dp</dimen>

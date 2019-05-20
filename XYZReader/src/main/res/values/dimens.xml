@@ -10,8 +10,6 @@
     <dimen name="thumbnail_dimension">100dp</dimen>
     <dimen name="scroll_view_padding_top">112dp</dimen>
     <dimen name="scroll_view_padding_bottom">28dp</dimen>
-    <dimen name="detail_photo_height">304dp</dimen>
-    <dimen name="detail_card_top_margin">@dimen/detail_photo_height</dimen>
     <dimen name="detail_inner_horizontal_margin">16dp</dimen>
     <dimen name="detail_metabar_vertical_padding">16dp</dimen>
     <dimen name="detail_metabar_title_bottom_padding">4dp</dimen>
