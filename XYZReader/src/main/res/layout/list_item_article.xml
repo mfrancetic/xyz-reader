@@ -17,7 +17,6 @@
         android:elevation="@dimen/detail_linear_layout_elevation"
         android:orientation="vertical">
 
-        <!--suppress AndroidLintContentDescription -->
         <com.example.xyzreader.ui.DynamicHeightNetworkImageView
             android:id="@+id/thumbnail"
             style="@style/NetworkImageViewStyle"

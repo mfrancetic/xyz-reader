@@ -15,7 +15,7 @@
      limitations under the License.
 -->
 <resources>
-
+    <!-- Style of the app -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -24,6 +24,7 @@
         <item name="android:windowContentTransitions">true</item>
     </style>
 
+    <!-- Style of the toolbar -->
     <style name="ToolbarStyle" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">?android:actionBarSize</item>
@@ -36,11 +37,13 @@
         <item name="android:elevation">@dimen/app_bar_layout_main_elevation</item>
     </style>
 
+    <!-- Style of the CollapsingToolbarLayout -->
     <style name="CollapsingToolbarLayoutStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
     </style>
 
+    <!-- Style of the logo in the ArticleListActivity -->
     <style name="LogoStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -48,6 +51,7 @@
         <item name="android:scaleType">centerCrop</item>
     </style>
 
+    <!-- Style of the RecyclerView -->
     <style name="RecyclerViewStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -59,11 +63,13 @@
         <item name="android:scrollbarStyle">outsideOverlay</item>
     </style>
 
+    <!-- Style of the NetworkImageView -->
     <style name="NetworkImageViewStyle">
         <item name="android:layout_width">@dimen/thumbnail_dimension</item>
         <item name="android:layout_height">@dimen/thumbnail_dimension</item>
     </style>
 
+    <!-- Style of the title and subtitle in the ArticleListActivity -->
     <style name="TitleSubtitleTextViewStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -71,13 +77,15 @@
         <item name="android:paddingRight">@dimen/detail_title_padding_horizontal</item>
         <item name="android:ellipsize">end</item>
     </style>
-    
+
+    <!-- Style of the ImageView in the ArticleDetailActivity -->
     <style name="DetailImageViewStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:scaleType">centerCrop</item>
     </style>
 
+    <!-- Style of the meta bar in the ArticleListActivity -->
     <style name="MetaBarStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -91,6 +99,7 @@
         <item name="android:paddingBottom">@dimen/detail_metabar_vert_padding</item>
     </style>
 
+    <!-- Style of the ScrollView -->
     <style name="ScrollViewStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -102,6 +111,7 @@
         <item name="android:scrollbarStyle">outsideInset</item>
     </style>
 
+    <!-- Style of the body text in the ArticleDetailActivity -->
     <style name="ArticleBodyTextViewStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -114,12 +124,11 @@
         <item name="android:textSize">@dimen/detail_body_text_size</item>
     </style>
 
+    <!-- Style of the FloatingActionButton in the ArticleDetailActivity -->
     <style name="FloatingActionButtonStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">@dimen/fab_margin</item>
         <item name="android:stateListAnimator">@animator/fab_state_list_anim</item>
-
     </style>
-
 </resources>
