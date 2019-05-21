@@ -56,7 +56,6 @@ public class ArticleListActivity extends AppCompatActivity implements
     private DynamicHeightNetworkImageView sharedView;
     private int id;
     private final String transitionNameKey = "transitionName";
-    private String url;
 
     private static final String idKey = "id";
     private static final String bundleKey = "bundle";
@@ -232,7 +231,7 @@ public class ArticleListActivity extends AppCompatActivity implements
                                 + "<br/>" + " by "
                                 + author));
             }
-            url = mCursor.getString(ArticleLoader.Query.THUMB_URL);
+            String url = mCursor.getString(ArticleLoader.Query.THUMB_URL);
 
             holder.thumbnailView.setImageUrl(
                     url,
