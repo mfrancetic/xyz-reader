@@ -31,14 +31,14 @@
         <item name="android:elevation">@dimen/detail_toolbar_elevation</item>
     </style>
 
-    <style name="AppBarLayoutStyle">
+    <style name="AppBarLayoutStyle" parent="Widget.Design.AppBarLayout">
         <item name="android:layout_width">match_parent</item>
         <item name="android:background">@color/colorPrimary</item>
         <item name="android:elevation">@dimen/app_bar_layout_main_elevation</item>
     </style>
 
     <!-- Style of the CollapsingToolbarLayout -->
-    <style name="CollapsingToolbarLayoutStyle">
+    <style name="CollapsingToolbarLayoutStyle" parent="TextAppearance.Design.CollapsingToolbar.Expanded">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
     </style>
@@ -125,7 +125,7 @@
     </style>
 
     <!-- Style of the FloatingActionButton in the ArticleDetailActivity -->
-    <style name="FloatingActionButtonStyle">
+    <style name="FloatingActionButtonStyle" parent="Widget.Design.FloatingActionButton">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">@dimen/fab_margin</item>
