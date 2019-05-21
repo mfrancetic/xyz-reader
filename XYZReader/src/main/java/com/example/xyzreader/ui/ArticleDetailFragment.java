@@ -165,7 +165,6 @@ public class ArticleDetailFragment extends Fragment implements
         /* Find the toolbar, set it as the support action bar and set the navigationIcon */
         Toolbar toolbar = mRootView.findViewById(R.id.toolbar_detail);
         getActivityCast().setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
 
         /* Set the NavigationOnClickListener to the toolbar */
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

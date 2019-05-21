@@ -1,10 +1,8 @@
 <resources>
     <!-- The name of the app -->
     <string name="app_name" translatable="false">XYZ Reader</string>
-    <!-- The welcome message -->
     <!-- Refresh action of the menu -->
     <string name="action_refresh">Refresh</string>
-    <!-- Settings title -->
     <!-- Share action in the Detail Activity -->
     <string name="action_share">Share</string>
     <!-- Snackbar message that informs about updating the article list -->
