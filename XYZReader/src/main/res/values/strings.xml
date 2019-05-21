@@ -7,7 +7,6 @@
     <string name="action_share">Share</string>
     <!-- Snackbar message that informs about updating the article list -->
     <string name="snackbar_text_update">The article list has been updated</string>
-    <!-- Up button text -->
     <!-- Content description of the photo -->
     <string name="transition_photo">Transition photo</string>
     <!-- Photo content description -->

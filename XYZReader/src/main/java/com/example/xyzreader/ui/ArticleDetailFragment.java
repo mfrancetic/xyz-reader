@@ -53,6 +53,14 @@ public class ArticleDetailFragment extends Fragment implements
     private static final String TAG = "ArticleDetailFragment";
 
     private static final String ARG_ITEM_ID = "item_id";
+    private static final String transitionNameKey = "transitionName";
+    private static final String titleKey = "title";
+    private static final String authorKey = "author";
+    private static final String dateKey = "date";
+    private static final String bodyKey = "body";
+    private static final String positionKey = "position";
+    private static final String photoKey = "photo";
+    private static final String urlKey = "url";
     private Cursor mCursor;
     private long mItemId;
     private View mRootView;
@@ -61,19 +69,11 @@ public class ArticleDetailFragment extends Fragment implements
     private ImageView mPhotoView;
     private int position;
     private String transitionName;
-    private final String transitionNameKey = "transitionName";
-    private final String titleKey = "title";
-    private final String authorKey = "author";
-    private final String dateKey = "date";
     private String title;
     private String date;
     private String author;
-    private final String bodyKey = "body";
     private String body;
-    private static final String positionKey = "position";
-    private final String urlKey = "url";
     private String url;
-    private static final String photoKey = "photo";
 
     @SuppressLint("SimpleDateFormat")
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");

@@ -34,6 +34,7 @@ public class ArticleDetailActivity extends AppCompatActivity
     private ViewPager mPager;
     private long mSelectedItemId;
     private MyPagerAdapter mPagerAdapter;
+    private static final String transitionNameKey = "transitionName";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,7 @@ public class ArticleDetailActivity extends AppCompatActivity
         postponeEnterTransition();
 
         Intent intent = getIntent();
-        String transitionName = intent.getStringExtra("transitionName");
+        String transitionName = intent.getStringExtra(transitionNameKey);
 
         getLoaderManager().initLoader(0, null, this);
 

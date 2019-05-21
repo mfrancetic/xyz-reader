@@ -25,6 +25,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
 import com.example.xyzreader.data.ItemsContract;
@@ -57,9 +58,9 @@ public class ArticleListActivity extends AppCompatActivity implements
     private final String transitionNameKey = "transitionName";
     private String url;
 
-    private final String idKey = "id";
-
+    private static final String idKey = "id";
     private static final String bundleKey = "bundle";
+    private boolean mIsRefreshing = false;
 
     @SuppressLint("SimpleDateFormat")
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
@@ -110,7 +111,6 @@ public class ArticleListActivity extends AppCompatActivity implements
         unregisterReceiver(mRefreshingReceiver);
     }
 
-    private boolean mIsRefreshing = false;
 
     private final BroadcastReceiver mRefreshingReceiver = new BroadcastReceiver() {
         @Override
@@ -133,7 +133,6 @@ public class ArticleListActivity extends AppCompatActivity implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-
         /* After the load is completed, start the postponed EnterTransition */
         startPostponedEnterTransition();
 
@@ -285,8 +284,6 @@ public class ArticleListActivity extends AppCompatActivity implements
     protected void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putString(transitionNameKey, transitionName);
         savedInstanceState.putInt(idKey, id);
-        String urlKey = "url";
-        savedInstanceState.putString(urlKey, url);
         super.onSaveInstanceState(savedInstanceState);
     }
 }
